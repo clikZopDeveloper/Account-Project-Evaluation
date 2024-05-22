@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="@dimen/_5dip"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    tools:context=".Fragment.HomeFragment">
+
+                    <ImageView
+                        android:layout_width="@dimen/_170dp"
+                        android:layout_height="@dimen/_100dip"
+                        android:layout_gravity="center"
+                        android:src="@drawable/app_logo" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="@dimen/_5dip"
+                        android:layout_marginTop="@dimen/_20dip"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/edSearch"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_5dip"
+                            android:layout_marginBottom="@dimen/_5dip"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_border_shape"
+                            android:drawableStart="@drawable/ic_search_black_24dp"
+                            android:hint="Search here..."
+                            android:paddingHorizontal="@dimen/_4dip"
+                            android:paddingVertical="14dp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/gray"
+                            android:textSize="16sp" />
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fb_Search"
+                            style="@style/style_FB_submit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:fabSize="mini"
+                            android:layout_marginTop="@dimen/_5dip"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/_10dp"
+                            android:layout_marginEnd="@dimen/_10dp"
+                            android:layout_marginBottom="@dimen/_10dp"
+                            android:src="@drawable/ic_search_black_24dp"
+                            app:tint="@android:color/white" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </androidx.core.widget.NestedScrollView>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fb_AddArchitect"
+                style="@style/style_FB_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_10dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginEnd="@dimen/_10dp"
+                android:layout_marginBottom="@dimen/_10dp"
+                android:src="@drawable/ic_baseline_add_24"
+                app:tint="@android:color/white" />
+        </RelativeLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</layout>
