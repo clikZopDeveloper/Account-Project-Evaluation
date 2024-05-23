@@ -60,7 +60,7 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_expense)
         if (SalesApp.isEnableScreenshort==true){
-            window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+            window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         myReceiver = ConnectivityListener()
@@ -87,13 +87,11 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
                 val month = c[Calendar.MONTH]
                 val day = c[Calendar.DAY_OF_MONTH]
                 val datePickerDialog = DatePickerDialog(
-                    this@AddExpensesActivity,
-                    { view, year, monthOfYear, dayOfMonth ->
+                    this@AddExpensesActivity, {
+                            view, year, monthOfYear, dayOfMonth ->
                         //  dob.setText(dateofnews);
-
                         //    val dateofnews = "${dayOfMonth.toString() + "/" + (monthOfYear + 1).toString() + "/" + year}"
-                        val dateofnews =
-                            "${year.toString() + "-" + (monthOfYear + 1).toString() + "-" + dayOfMonth.toString()}"
+                        val dateofnews ="${year.toString() + "-" + (monthOfYear + 1).toString() + "-" + dayOfMonth.toString()}"
 
                         //   val dateofnews = (monthOfYear + 1).toString() + "/" + dayOfMonth + "/" + year
 
@@ -108,6 +106,7 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
 
             }
         }
+
     }
 
     fun allGetApi() {
@@ -146,7 +145,6 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
     override fun success(tag: String?, jsonElement: JsonElement) {
         try {
             apiClient.progressView.hideLoader()
-
             if (tag == ApiContants.getCategory) {
                 val categoryBean = apiClient.getConvertIntoModel<CategoryBean>(
                     jsonElement.toString(),
