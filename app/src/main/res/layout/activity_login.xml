@@ -17,9 +17,10 @@
 
 
         <ImageView
-            android:layout_width="@dimen/_200dip"
+            android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/_20dip"
             android:layout_marginVertical="@dimen/_20dip"
             android:src="@drawable/app_logo"/>
         <com.google.android.material.textfield.TextInputLayout

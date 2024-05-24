@@ -32,7 +32,6 @@ class HomeFragment : Fragment(), ApiResponseListner {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = com.example.accounting.databinding.FragmentHomeBinding.inflate(
             inflater,
             container,

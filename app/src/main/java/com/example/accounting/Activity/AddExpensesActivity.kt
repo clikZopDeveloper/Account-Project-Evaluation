@@ -640,6 +640,7 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
 
         })
         adapte1.notifyDataSetChanged()
+
         btnSubmit.setOnClickListener {
             builder.dismiss()
             if (editCatName.text.isNullOrEmpty()){
@@ -649,7 +650,6 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
             }
 
         }
-
     }
 
     override fun onStart() {

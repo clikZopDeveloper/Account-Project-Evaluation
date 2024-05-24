@@ -40,7 +40,7 @@ class SplashActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLi
         myReceiver = ConnectivityListener()
         val animation4 = AnimationUtils.loadAnimation(this, com.example.accounting.R.anim.zoom)
         //GeneralUtilities.getInstance().setStatusBarColor(SplashActivity.this, ContextCompat.getColor(context, R.color.colorPrimaryDark));
-        binding.image.startAnimation(animation4)
+     //   binding.image.startAnimation(animation4)
      //   initNotificationRefresher()
 
         Handler(Looper.getMainLooper()).postDelayed({

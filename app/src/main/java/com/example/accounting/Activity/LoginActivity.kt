@@ -30,6 +30,7 @@ class LoginActivity : AppCompatActivity(), ApiResponseListner {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         window.setFlags(
+            //
             WindowManager.LayoutParams.FLAG_SECURE,
             WindowManager.LayoutParams.FLAG_SECURE
         );
