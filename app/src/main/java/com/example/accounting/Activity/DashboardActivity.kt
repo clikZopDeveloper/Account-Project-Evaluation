@@ -14,9 +14,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.accounting.Adapter.CommonFieldDrawerAdapter
+import com.example.accounting.Fragment.ExpensesFragment
 import com.example.accounting.Fragment.HomeFragment
 import com.example.accounting.Fragment.SettingFragment
-import com.example.accounting.Fragment.StaffFragment
+import com.example.accounting.Fragment.WalletLadgerFragment
 import com.example.accounting.Model.*
 import com.example.accounting.R
 import com.example.accounting.Utills.*
@@ -31,34 +32,42 @@ class DashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_SECURE,
+            WindowManager.LayoutParams.FLAG_SECURE
+        );
 
-      //  val drawerLayout: DrawerLayout = binding.drawerLayout
+        //  val drawerLayout: DrawerLayout = binding.drawerLayout
         //  val navView: NavigationView = binding.navView
-   //     val navBottomView: BottomNavigationView = binding.appBarMain.bottomNavView
+        //     val navBottomView: BottomNavigationView = binding.appBarMain.bottomNavView
 
         //val headerView: View = binding.navView.getHeaderView(0)
 
-       // rcNav = headerView.findViewById<RecyclerView>(R.id.rcNaDrawer)
+        // rcNav = headerView.findViewById<RecyclerView>(R.id.rcNaDrawer)
 
 
+        //  val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
-      //  val navController = findNavController(R.id.nav_host_fragment_activity_main)
-
+        binding.appBarMain.appbarLayout.tvWalletBal.setText(
+            PrefManager.getString(
+                ApiContants.walletBalance,
+                "0"
+            )
+        )
 
         binding.appBarMain.appbarLayout.ivMenu.setOnClickListener {
-      //      drawerLayout.open()
+            //      drawerLayout.open()
         }
 
-     //   handleRecyclerDrawer()
-      //  navBottomView.setOnNavigationItemSelectedListener(mBottomNavigation)
+        //   handleRecyclerDrawer()
+        //  navBottomView.setOnNavigationItemSelectedListener(mBottomNavigation)
 
         Log.d("token>>>>>", PrefManager.getString(ApiContants.AccessToken, ""))
 
-    //    Log.d("asdad", PrefManager.getString(ApiContants.dayStatus, ""))
+        //    Log.d("asdad", PrefManager.getString(ApiContants.dayStatus, ""))
 
         //  setupActionBarWithNavController(navController, appBarConfiguration)
-      //  navBottomView.setupWithNavController(navController)
+        //  navBottomView.setupWithNavController(navController)
 
         val bottomNavigationView =
             findViewById<View>(R.id.bottom_nav_view) as BottomNavigationView
@@ -71,6 +80,7 @@ class DashboardActivity : AppCompatActivity() {
         )
 
     }
+
     fun setTitle(title: kotlin.String) {
         binding.appBarMain.appbarLayout.tvTitle.text = title
     }
@@ -93,20 +103,17 @@ class DashboardActivity : AppCompatActivity() {
                     //mRecyclerView.releasePlayer();
                     return@OnNavigationItemSelectedListener true
                 }
-                R.id.navigation_allleads -> {
-                    Toast.makeText(this,"Toast",Toast.LENGTH_SHORT).show()
-                  //  startActivity(Intent(this,AllLeadActivity::class.java).putExtra("leadStatus",""))
-                    // replaceFragment(RequrimentFragment())
-                    // mRecyclerView.releasePlayer();
+
+                R.id.navigation_expenses -> {
+                    replaceFragment(ExpensesFragment())
                     return@OnNavigationItemSelectedListener true
                 }
 
-                R.id.navigation_staff -> {
-                           replaceFragment(StaffFragment())
-
-                    //   mRecyclerView.releasePlayer();
+                R.id.navigation_wallet_ledger -> {
+                    replaceFragment(WalletLadgerFragment())
                     return@OnNavigationItemSelectedListener true
                 }
+
                 R.id.navigation_setting -> {
                     replaceFragment(SettingFragment())
                     //   mRecyclerView.releasePlayer();
@@ -143,7 +150,7 @@ class DashboardActivity : AppCompatActivity() {
         return menuList
     }
 
-    fun replaceFragment( fragment: Fragment) {
+    fun replaceFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.container, fragment)
@@ -167,7 +174,7 @@ class DashboardActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         // Start the LocationService when the app is closed
-     //   startService(Intent(this, LocationService::class.java))
+        //   startService(Intent(this, LocationService::class.java))
     }
 
 }

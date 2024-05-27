@@ -373,6 +373,7 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
         adapte1 = ArrayAdapter(
             this@AddExpensesActivity,
             android.R.layout.simple_list_item_1,
+
             state
         )
         binding.SelectCustomer.setAdapter(adapte1)

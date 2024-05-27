@@ -8,8 +8,8 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">All Leads</string>
-    <string name="menu_slideshow">Task</string>
+    <string name="menu_gallery">Expenses</string>
+    <string name="menu_slideshow">Wallet Ledger</string>
     <string name="menu_setting">Setting</string>
 
     <string name="title_home">Home</string>

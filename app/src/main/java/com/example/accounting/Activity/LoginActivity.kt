@@ -77,11 +77,31 @@ class LoginActivity : AppCompatActivity(), ApiResponseListner {
                     PrefManager.putString(ApiContants.AccessToken, loginModel.data.token)
                     PrefManager.putString(
                         ApiContants.mobileNumber,
-                        binding.editMobNo.text.toString()
+                        loginModel.data.mobile.toString()
                     )
                     PrefManager.putString(
                         ApiContants.password,
                         binding.editPassword.text.toString()
+                    )
+                    PrefManager.putString(
+                        ApiContants.walletBalance,
+                        loginModel.data.walletAmt.toString()
+                    )
+                    PrefManager.putString(
+                        ApiContants.name,
+                        loginModel.data.name.toString()
+                    )
+                    PrefManager.putString(
+                        ApiContants.EmailAddress,
+                        loginModel.data.email.toString()
+                    )
+                    PrefManager.putString(
+                        ApiContants.state,
+                        loginModel.data.state.toString()
+                    )
+                    PrefManager.putString(
+                        ApiContants.status,
+                        loginModel.data.status.toString()
                     )
                     Toast.makeText(activity, loginModel.msg, Toast.LENGTH_SHORT).show()
                     GeneralUtilities.launchActivity(this, DashboardActivity::class.java)

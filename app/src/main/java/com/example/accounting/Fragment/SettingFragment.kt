@@ -48,7 +48,8 @@ class SettingFragment : Fragment(), ApiResponseListner {
         val root: View = binding.root
         val titleText = (activity as DashboardActivity?)
         titleText?.setTitle("Setting")
-        apiProfileData()
+        setData()
+       // apiProfileData()
         binding.apply {
 
             llChangePass.setOnClickListener {
@@ -143,7 +144,7 @@ class SettingFragment : Fragment(), ApiResponseListner {
                     jsonElement.toString(),
                     ProfileBean::class.java
                 )
-                setData(profileBean.data)
+
                 Toast.makeText(requireContext(), profileBean.msg, Toast.LENGTH_SHORT).show()
 
             }
@@ -154,18 +155,17 @@ class SettingFragment : Fragment(), ApiResponseListner {
         }
     }
 
-    private fun setData(data: ProfileBean.Data) {
+    private fun setData() {
     binding.apply {
-
-    tvName.setText(data.name)
-    tvMobNo.setText(data.mobile)
-    tvEmail.setText(data.email)
+    tvName.setText(PrefManager.getString(ApiContants.name,"0"))
+    tvMobNo.setText(PrefManager.getString(ApiContants.mobileNumber,"0"))
+    tvEmail.setText(PrefManager.getString(ApiContants.EmailAddress,"0"))
 
     llProfile.setOnClickListener {
-        startActivity(Intent(requireContext(),ProfileActivity::class.java).putExtra("profileResponse",data))
+        startActivity(Intent(requireContext(),ProfileActivity::class.java))
     }
     rlProfile.setOnClickListener {
-        startActivity(Intent(requireContext(),ProfileActivity::class.java).putExtra("profileResponse",data))
+        startActivity(Intent(requireContext(),ProfileActivity::class.java))
     }
   }
     }

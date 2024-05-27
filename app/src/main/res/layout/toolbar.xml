@@ -82,6 +82,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="16dp"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:src="@drawable/ic_alarm"
                     android:tint="@color/white"/>
 
@@ -97,6 +98,20 @@
                     android:src="@drawable/ic_outline_share_24"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/tvWalletBal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text=""
+                    android:layout_marginEnd="@dimen/_10dp"
+                    android:drawableLeft="@drawable/ic_baseline_account_balance_wallet_24"
+                    android:textColor="@color/white"
+                    android:drawablePadding="@dimen/_5dip"
+                    android:textSize="18sp"
+                    app:textAllCaps="false" />
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -104,6 +119,8 @@
                     android:visibility="gone"
                     android:layout_marginEnd="@dimen/_5dip"
                     android:orientation="horizontal">
+
+
 
                     <Switch
                         android:id="@+id/switchDayStart"

@@ -17,11 +17,15 @@ public class ApiContants {
     companion object {
         var isconnectedtonetwork = false
 
-        const val EmailAddress = "hello.com"
+        const val EmailAddress = "EmailAddress"
         const val REQ_CODE_VERSION_UPDATE = 530
         const val PlaceLocation = "location"
         const val mobileNumber = "mobileNumber"
         const val password = "password"
+        const val name = "name"
+        const val state = "state"
+        const val status = "status"
+        const val walletBalance = "walletBalance"
         const val PlaceRegion = "locationCountry"
         const val PlaceLatLang = "locLatLang"
         const val PlaceLat = "locLat"
@@ -61,11 +65,12 @@ public class ApiContants {
         const val getCategory = "get-expense-category"
         const val getSubCategory = "get-expense-sub-category"
         const val getCustomers = "get-customers"
+        const val getExpenses = "get-expense"
 
 /////////////////////////////////////////////
 
         const val dashboard = "dashboard"
-        const val GetTaskList = "task-list"
+        const val GetWalletLadger = "wallet-ladger"
         const val GetUpdateTask = "update-task"
         const val GetAddTask = "add-task"
         const val getProfile = "get-profile"

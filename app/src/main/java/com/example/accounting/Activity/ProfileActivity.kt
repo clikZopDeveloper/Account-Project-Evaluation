@@ -16,10 +16,7 @@ import com.example.accounting.ApiHelper.ApiController
 import com.example.accounting.ApiHelper.ApiResponseListner
 import com.example.accounting.Model.ProfileBean
 import com.example.accounting.R
-import com.example.accounting.Utills.ConnectivityListener
-import com.example.accounting.Utills.GeneralUtilities
-import com.example.accounting.Utills.SalesApp
-import com.example.accounting.Utills.Utility
+import com.example.accounting.Utills.*
 import com.example.accounting.databinding.ActivityProfileBinding
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
@@ -57,12 +54,13 @@ class ProfileActivity : AppCompatActivity(), ApiResponseListner,
         binding.igToolbar.ivMenu.setImageDrawable(resources.getDrawable(R.drawable.ic_back_black))
         binding.igToolbar.ivMenu.setOnClickListener { finish() }
         binding.igToolbar.ivMenu.visibility = View.VISIBLE
+
         ApiContants.requestCameraPermission(this, PERMISSION_CODE)
 
-        val profileData = intent.getSerializableExtra("profileResponse") as ProfileBean.Data
-        Log.d("zxvcxc", Gson().toJson(profileData))
+      //  val profileData = intent.getSerializableExtra("profileResponse") as ProfileBean.Data
+      //  Log.d("zxvcxc", Gson().toJson(profileData))
 
-        setData(profileData)
+        setData()
 
         binding.apply {
             btnSubmit.setOnClickListener {
@@ -157,12 +155,24 @@ class ProfileActivity : AppCompatActivity(), ApiResponseListner,
         }
     }
 
-    private fun setData(data: ProfileBean.Data) {
+    private fun setData() {
         binding.apply {
-            edFullName.setText(data.name.toString())
-            edEmail.setText(data.email.toString())
-            edMobNo.setText(data.mobile.toString())
-            //    edAddress.setText(data.address.toString())
+            binding.igToolbar.tvWalletBal.setText(
+                PrefManager.getString(
+                    ApiContants.walletBalance,
+                    "0"
+                )
+            )
+            edFullName.setText(PrefManager.getString(ApiContants.name,"0"))
+            edMobNo.setText(PrefManager.getString(ApiContants.mobileNumber,"0"))
+            edEmail.setText(PrefManager.getString(ApiContants.EmailAddress,"0"))
+            edAddress.setText(PrefManager.getString(ApiContants.state,"0"))
+            if (PrefManager.getString(ApiContants.status,"0").equals("1")){
+                ivStatus.visibility=View.VISIBLE
+            }else{
+                ivStatus.visibility=View.GONE
+            }
+        //    edStatus.setText(PrefManager.getString(ApiContants.status,"0"))
         }
     }
 

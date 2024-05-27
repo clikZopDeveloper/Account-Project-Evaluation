@@ -12,10 +12,16 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_staff"
-        android:name="com.example.accounting.Fragment.StaffFragment"
+        android:id="@+id/navigation_expenses"
+        android:name="com.example.accounting.Fragment.ExpensesFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_expenses" />
+    <fragment
+        android:id="@+id/navigation_wallet_ledger"
+        android:name="com.example.accounting.Fragment.WalletLadgerFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_staff" />
+        tools:layout="@layout/fragment_wallet_ladger" />
+
     <fragment
         android:id="@+id/navigation_setting"
         android:name="com.example.accounting.Fragment.SettingFragment"
