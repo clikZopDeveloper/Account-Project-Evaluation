@@ -43,13 +43,11 @@ class ApiClient {
 
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
-
         httpClient.addInterceptor(interceptor)
         httpClient.addInterceptor(ChuckerInterceptor(context))
         httpClient.addInterceptor(ConnectivityInterceptor(context))
         httpClient.addInterceptor { chain ->
             val original = chain.request()
-
 
             if (SalesApp.isAddAccessToken) {
                 var requestBuilder = original.newBuilder()
@@ -66,7 +64,6 @@ class ApiClient {
                 val request = requestBuilder.build()
                 chain.proceed(request)
             }
-
         }
 
         okHttpClient = httpClient.build()

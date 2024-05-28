@@ -64,7 +64,6 @@ public class ApiContants {
         const val getCustomer = "get-customers"
         const val getCategory = "get-expense-category"
         const val getSubCategory = "get-expense-sub-category"
-        const val getCustomers = "get-customers"
         const val getExpenses = "get-expense"
 
 /////////////////////////////////////////////

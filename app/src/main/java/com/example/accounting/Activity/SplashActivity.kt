@@ -48,7 +48,6 @@ class SplashActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLi
             if (PrefManager.getString(ApiContants.AccessToken, "") != "") {
                 GeneralUtilities.launchActivity(this, DashboardActivity::class.java)
                 finishAffinity()
-
             } else {
                 GeneralUtilities.launchActivity(this, LoginActivity::class.java)
                 finishAffinity()

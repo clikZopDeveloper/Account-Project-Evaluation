@@ -39,16 +39,15 @@ class WalletLadgerFragment : Fragment(), ApiResponseListner {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentWalletLadgerBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
         val titleText = (activity as DashboardActivity?)
         titleText?.setTitle("Wallet Ledger")
         apiClient = ApiController(activity, this)
         apiWalletLadger()
 
         return root
+
     }
 
     fun apiWalletLadger() {
@@ -59,7 +58,6 @@ class WalletLadgerFragment : Fragment(), ApiResponseListner {
         params["fromDt"] = ""
         apiClient.getApiPostCall(ApiContants.GetWalletLadger, params)
     }
-
 
     fun dialogUpdateTask(taskID: Int)  {
         val builder = AlertDialog.Builder(requireContext())

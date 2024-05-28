@@ -14,10 +14,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.accounting.Adapter.CommonFieldDrawerAdapter
-import com.example.accounting.Fragment.ExpensesFragment
-import com.example.accounting.Fragment.HomeFragment
-import com.example.accounting.Fragment.SettingFragment
-import com.example.accounting.Fragment.WalletLadgerFragment
+import com.example.accounting.Fragment.*
 import com.example.accounting.Model.*
 import com.example.accounting.R
 import com.example.accounting.Utills.*
@@ -38,13 +35,13 @@ class DashboardActivity : AppCompatActivity() {
         );
 
         //  val drawerLayout: DrawerLayout = binding.drawerLayout
+
         //  val navView: NavigationView = binding.navView
         //     val navBottomView: BottomNavigationView = binding.appBarMain.bottomNavView
 
         //val headerView: View = binding.navView.getHeaderView(0)
 
         // rcNav = headerView.findViewById<RecyclerView>(R.id.rcNaDrawer)
-
 
         //  val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
@@ -69,8 +66,7 @@ class DashboardActivity : AppCompatActivity() {
         //  setupActionBarWithNavController(navController, appBarConfiguration)
         //  navBottomView.setupWithNavController(navController)
 
-        val bottomNavigationView =
-            findViewById<View>(R.id.bottom_nav_view) as BottomNavigationView
+        val bottomNavigationView = findViewById<View>(R.id.bottom_nav_view) as BottomNavigationView
         bottomNavigationView.setOnNavigationItemSelectedListener(mBottomNavigation)
         GeneralUtilities.goToFragment(
             this,
@@ -78,7 +74,6 @@ class DashboardActivity : AppCompatActivity() {
             R.id.container,
             true
         )
-
     }
 
     fun setTitle(title: kotlin.String) {
@@ -95,8 +90,7 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    private val mBottomNavigation =
-        BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
+    private val mBottomNavigation = BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.navigation_home -> {
                     replaceFragment(HomeFragment())
@@ -113,6 +107,10 @@ class DashboardActivity : AppCompatActivity() {
                     replaceFragment(WalletLadgerFragment())
                     return@OnNavigationItemSelectedListener true
                 }
+                R.id.navigation_sales -> {
+                    replaceFragment(SalesFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
 
                 R.id.navigation_setting -> {
                     replaceFragment(SettingFragment())
@@ -122,7 +120,6 @@ class DashboardActivity : AppCompatActivity() {
             }
             false
         }
-
 
     fun handleRecyclerDrawer() {
         rcNav.layoutManager = LinearLayoutManager(this)

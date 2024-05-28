@@ -25,9 +25,10 @@
         <ImageView
             android:id="@+id/imagea"
             android:layout_width="wrap_content"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             android:padding="@dimen/_10dp"
             android:layout_marginHorizontal="@dimen/_20dip"
+            android:layout_marginVertical="@dimen/_20dip"
             android:src="@drawable/app_logo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

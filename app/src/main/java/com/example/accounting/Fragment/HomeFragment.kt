@@ -30,8 +30,7 @@ class HomeFragment : Fragment(), ApiResponseListner {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+        savedInstanceState: Bundle? ): View {
         _binding = com.example.accounting.databinding.FragmentHomeBinding.inflate(
             inflater,
             container,
@@ -131,7 +130,6 @@ class HomeFragment : Fragment(), ApiResponseListner {
         super.onDestroyView()
         _binding = null
     }
-
 
     private fun getMenusAllLead(data: DashboardBean.Data.AllLead): ArrayList<MenuModelBean> {
         var menuList = ArrayList<MenuModelBean>()
