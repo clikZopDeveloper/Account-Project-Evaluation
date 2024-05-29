@@ -9,7 +9,7 @@ data class WalletLedgerBean(
     @SerializedName("error")
     val error: Boolean, // false
     @SerializedName("msg")
-    val msg: String // Data loaded successfully.
+    val msg: String // Dataloaded successfully.
 ) {
     data class Data(
         @SerializedName("credit_amount")
@@ -39,7 +39,7 @@ data class WalletLedgerBean(
             @SerializedName("city")
             val city: String, // Bokaro
             @SerializedName("created_at")
-            val createdAt: String, // 2024-05-03 13:33:09
+            val createdAt: String, // 2024-05-0313:33:09
             @SerializedName("email")
             val email: String, // test@gmail.com
             @SerializedName("id")
@@ -47,13 +47,13 @@ data class WalletLedgerBean(
             @SerializedName("joining_date")
             val joiningDate: String, // 2024-05-03
             @SerializedName("last_ip")
-            val lastIp: String, // 2405:201:5c0f:89a1:e976:21c2:3b3b:ac92
+            val lastIp: String, // 2405:201:5c0f:89a1:add1:39ed:e65d:ce1
             @SerializedName("last_login")
-            val lastLogin: String, // 2024-05-27 17:39:40
+            val lastLogin: String, // 2024-05-2911:42:44
             @SerializedName("mobile")
             val mobile: String, // 8787878787
             @SerializedName("name")
-            val name: String, // Test user
+            val name: String, // Testuser
             @SerializedName("password")
             val password: String, // 123456
             @SerializedName("role")
@@ -63,11 +63,11 @@ data class WalletLedgerBean(
             @SerializedName("status")
             val status: Int, // 1
             @SerializedName("token")
-            val token: String, // NotYVuiwncGD
+            val token: String, // 20A7E1gyVMHj
             @SerializedName("username")
             val username: String, // Test
             @SerializedName("wallet_amt")
-            val walletAmt: String // 10000.00
+            val walletAmt: String // 9980.00
         )
     }
 }

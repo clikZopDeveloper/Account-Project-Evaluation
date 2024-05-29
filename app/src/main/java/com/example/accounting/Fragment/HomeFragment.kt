@@ -43,7 +43,7 @@ class HomeFragment : Fragment(), ApiResponseListner {
         val titleText = (activity as DashboardActivity?)
         titleText?.setTitle("Dashboard")
         binding.fbAddArchitect.setOnClickListener {
-            requireActivity().startActivity(Intent(requireActivity(), AddExpensesActivity::class.java).putExtra("way","Add Expenses"))
+            requireActivity().startActivity(Intent(requireActivity(), SettingsActivity::class.java).putExtra("way","Add Expenses"))
         }
   //    ApiContants.movabalebutton(binding.fbAddArchitect,requireActivity())
 
@@ -51,17 +51,23 @@ class HomeFragment : Fragment(), ApiResponseListner {
     //    apiCallDashboard()
 
         binding.apply {
-            refreshLayout.setOnRefreshListener {
+            /*refreshLayout.setOnRefreshListener {
             //    apiCallDashboard()
                 refreshLayout.isRefreshing = false
+            }*/
+            cardAddSale.setOnClickListener {
+                requireActivity().startActivity(Intent(requireActivity(), AddSalesActivity::class.java).putExtra("way","Add Sale"))
             }
-            binding.fbSearch.setOnClickListener {
+            cardAddExpense.setOnClickListener {
+                requireActivity().startActivity(Intent(requireActivity(), AddExpensesActivity::class.java).putExtra("way","Add Expenses"))
+            }
+           /* binding.fbSearch.setOnClickListener {
                 if (binding.edSearch.text.toString().isNullOrEmpty()){
                     Toast.makeText(requireContext(),"Enter Search Key",Toast.LENGTH_SHORT).show()
                 }else{
 
                 }
-            }
+            }*/
 
            /* tvAllTaskData.setOnClickListener {
                 (context as DashboardActivity).replaceFragment(StaffFragment())

@@ -1,21 +1,19 @@
 package com.example.accounting.Fragment
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.accounting.Activity.*
+import com.example.accounting.Adapter.GetExpenseAdapter
+import com.example.accounting.Adapter.GetSaleAdapter
 import com.example.accounting.ApiHelper.ApiController
 import com.example.accounting.ApiHelper.ApiResponseListner
 import com.example.accounting.Model.*
-import com.example.accounting.R
 import com.example.accounting.Utills.*
 import com.google.gson.JsonElement
 import com.stpl.antimatter.Utils.ApiContants
@@ -66,12 +64,12 @@ class ExpensesFragment : Fragment(), ApiResponseListner {
         try {
             apiClient.progressView.hideLoader()
             if (tag == ApiContants.getExpenses) {
-                val stateBean = apiClient.getConvertIntoModel<StateBean>(
+                val getExpensesBean = apiClient.getConvertIntoModel<GetExpensesBean>(
                     jsonElement.toString(),
-                    StateBean::class.java
+                    GetExpensesBean::class.java
                 )
-                if (stateBean.error == false) {
-
+                if (getExpensesBean.error == false) {
+                    handleExpensesList(getExpensesBean.data)
                 }
             }
 
@@ -84,7 +82,19 @@ class ExpensesFragment : Fragment(), ApiResponseListner {
         apiClient.progressView.hideLoader()
         Utility.showSnackBar(requireActivity(), errorMessage)
     }
+    fun handleExpensesList(data: List<GetExpensesBean.Data>) {
+        binding.rcExpenses.layoutManager =
+            LinearLayoutManager(requireContext())
+        val mAllAdapter = GetExpenseAdapter(requireActivity(), data, object :
+            RvStatusClickListner {
+            override fun clickPos(status: String, pos: Int) {
 
+            }
+        })
+        binding.rcExpenses.adapter = mAllAdapter
+        mAllAdapter.notifyDataSetChanged()
+        // rvMyAcFiled.isNestedScrollingEnabled = false
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

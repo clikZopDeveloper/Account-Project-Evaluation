@@ -318,25 +318,6 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:id="@+id/inputVendor"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:hint="Select Vendor"
-                    android:visibility="gone"
-                    app:boxStrokeColor="@color/light_grays">
-
-
-                    <AutoCompleteTextView
-                        android:id="@+id/SelectVendorLabour"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
                 <EditText
                     android:id="@+id/editCommisionPerQty"
                     android:layout_width="match_parent"
@@ -349,7 +330,15 @@
                     android:inputType="number"
                     android:hint="Enter Commision Per Qty"/>
 
-
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcAllProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="1"
+                    android:visibility="gone"
+                    tools:listitem="@layout/item_add_product" />
                 <TextView
                     android:id="@+id/btnSubmit"
                     android:layout_width="match_parent"

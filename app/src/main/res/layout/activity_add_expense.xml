@@ -135,6 +135,7 @@
                         android:layout_alignParentEnd="true"
                         android:padding="6dp"
                         android:text="Add"
+                        android:visibility="gone"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
                 </RelativeLayout>

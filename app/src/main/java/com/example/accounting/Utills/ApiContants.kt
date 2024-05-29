@@ -62,9 +62,13 @@ public class ApiContants {
         const val getVendorLabour = "get-vendor-labour"
         const val getSale = "get-sale"
         const val getCustomer = "get-customers"
+        const val getCompany = "get-company"
         const val getCategory = "get-expense-category"
         const val getSubCategory = "get-expense-sub-category"
         const val getExpenses = "get-expense"
+        const val getAddSale = "add-sale"
+        const val getAddExpeses = "add-expense"
+
 
 /////////////////////////////////////////////
 

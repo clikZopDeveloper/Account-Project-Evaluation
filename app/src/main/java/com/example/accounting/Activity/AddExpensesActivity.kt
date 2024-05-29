@@ -33,6 +33,9 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.stpl.antimatter.Utils.ApiContants
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import java.io.File
 import java.util.*
 
@@ -45,6 +48,8 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
     val PERMISSION_CODE = 12345
     val CAMERA_PERMISSION_CODE1 = 123
     var SELECT_PICTURES1 = 1
+    var customerID = ""
+    var vendorID = ""
     var catName = ""
     var subCatName = ""
     var vendorLabourName = ""
@@ -103,10 +108,43 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
             })
 
             btnSubmit.setOnClickListener {
-
+                apiAddExpenses()
             }
         }
+    }
 
+    fun apiAddExpenses() {
+        SalesApp.isAddAccessToken = true
+        val params = Utility.getParmMap()
+
+        val builder = MultipartBody.Builder()
+        builder.setType(MultipartBody.FORM)
+        builder.addFormDataPart("customer_id", customerID)
+        builder.addFormDataPart("amount", binding.editExpenseAmount.text.toString())
+        builder.addFormDataPart("name", binding.editName.text.toString())
+        builder.addFormDataPart("expense_category", binding.SelectCategory.text.toString())
+        builder.addFormDataPart("expense_subcategory", binding.SelectSubCategory.text.toString())
+        builder.addFormDataPart("expense_date", binding.editExpensesDate.text.toString())
+        builder.addFormDataPart("payment_mode", binding.SelectPaymentMode.text.toString())
+        builder.addFormDataPart("trans_id","")
+        builder.addFormDataPart("note", binding.editNote.text.toString())
+        builder.addFormDataPart("ref_no", binding.editRefNumber.text.toString())
+        builder.addFormDataPart("vendor_id", vendorID.toString())
+        builder.addFormDataPart("expense_type", binding.SelectExpenseType.text.toString())
+        builder.addFormDataPart("invoice_id", "")
+        builder.addFormDataPart("billed", binding.SelectBilled.text.toString())
+
+        if (file2!=null){
+            builder.addFormDataPart(
+                "file", file2?.name,
+                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file2!!)
+            )
+        }else{
+            file2=null
+        }
+
+        apiClient.progressView.showLoader()
+        apiClient.makeCallMultipart(ApiContants.getAddExpeses, builder.build())
     }
 
     fun allGetApi() {
@@ -145,6 +183,20 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
     override fun success(tag: String?, jsonElement: JsonElement) {
         try {
             apiClient.progressView.hideLoader()
+            if (tag == ApiContants.getAddExpeses) {
+                val categoryBean = apiClient.getConvertIntoModel<CategoryBean>(
+                    jsonElement.toString(),
+                    CategoryBean::class.java
+                )
+                if (categoryBean.error == false) {
+                    //  catList = categoryBean.data
+                  Toast.makeText(this@AddExpensesActivity,categoryBean.msg,Toast.LENGTH_SHORT).show()
+                   finish()
+                }else{
+                    Toast.makeText(this@AddExpensesActivity,categoryBean.msg,Toast.LENGTH_SHORT).show()
+
+                }
+            }
             if (tag == ApiContants.getCategory) {
                 val categoryBean = apiClient.getConvertIntoModel<CategoryBean>(
                     jsonElement.toString(),
@@ -235,8 +287,6 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
             for (i in data.indices) {
                 if (data.get(i).invoice.equals(parent.getItemAtPosition(position))) {
                     Log.d("StateID", data.get(i).id.toString())
-
-
                 }
             }
         })
@@ -383,6 +433,7 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
             for (i in data.indices) {
                 if (data.get(i).name.equals(parent.getItemAtPosition(position))) {
                     Log.d("StateID", data.get(i).id.toString())
+                    customerID=data.get(i).id.toString()
                     apiSale(data.get(i).id.toString())
                     setCustomer(data)
 
@@ -466,13 +517,14 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
         binding.SelectVendorLabour.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
             Log.d("xcvxcvc", Gson().toJson(data.get(position).name))
        //     subCatName=data.get(position).name.toString()
-         /*   for (i in data.indices) {
+            for (i in data.indices) {
                 if (data.get(i).name.equals(parent.getItemAtPosition(position))) {
                     Log.d("StateID", data.get(i).id.toString())
                     //      setCategory(data)
+                    vendorID=data.get(i).id.toString()
                     apiSubCategory( )
                 }
-            }*/
+            }
         })
         adapte1.notifyDataSetChanged()
 

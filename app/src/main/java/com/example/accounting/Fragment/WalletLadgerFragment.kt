@@ -55,7 +55,7 @@ class WalletLadgerFragment : Fragment(), ApiResponseListner {
         val params = Utility.getParmMap()
         apiClient.progressView.showLoader()
         params["fromDt"] = ""
-        params["fromDt"] = ""
+        params["toDt"] = ""
         apiClient.getApiPostCall(ApiContants.GetWalletLadger, params)
     }
 
