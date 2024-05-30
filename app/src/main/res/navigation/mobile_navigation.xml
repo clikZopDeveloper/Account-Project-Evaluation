@@ -7,30 +7,30 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.accounting.Fragment.HomeFragment"
+        android:name="com.example.account_project_evaluation.Fragment.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_expenses"
-        android:name="com.example.accounting.Fragment.ExpensesFragment"
+        android:name="com.example.account_project_evaluation.Fragment.ExpensesFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_expenses" />
     <fragment
         android:id="@+id/navigation_wallet_ledger"
-        android:name="com.example.accounting.Fragment.WalletLadgerFragment"
+        android:name="com.example.account_project_evaluation.Fragment.WalletLadgerFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_wallet_ladger" />
 
     <fragment
         android:id="@+id/navigation_sales"
-        android:name="com.example.accounting.Fragment.SalesFragment"
+        android:name="com.example.account_project_evaluation.Fragment.SalesFragment"
         android:label="@string/menu_sales"
         tools:layout="@layout/fragment_sales" />
 
     <fragment
         android:id="@+id/navigation_setting"
-        android:name="com.example.accounting.Fragment.SettingFragment"
+        android:name="com.example.account_project_evaluation.Fragment.SettingFragment"
         android:label="@string/menu_setting"
         tools:layout="@layout/fragment_setting" />
 </navigation>

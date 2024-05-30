@@ -34,7 +34,7 @@
     </LinearLayout>
 
 
-    <com.example.accounting.zoomimage.PhotoView
+    <com.example.account_project_evaluation.zoomimage.PhotoView
         android:id="@+id/ivFullImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

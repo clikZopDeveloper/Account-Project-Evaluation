@@ -13,5 +13,5 @@ dependencyResolutionManagement {
 
     }
 }
-rootProject.name = "Accounting App"
+rootProject.name = "Account Project Evaluation"
 include ':app'
