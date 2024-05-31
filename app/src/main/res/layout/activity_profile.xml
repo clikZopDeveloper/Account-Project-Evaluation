@@ -16,7 +16,7 @@
 
         <include
             android:id="@+id/igToolbar"
-            layout="@layout/toolbar" />
+            layout="@layout/toolbaractivity" />
 
         <ScrollView
             android:layout_width="match_parent"

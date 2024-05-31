@@ -9,283 +9,114 @@ data class DashboardBean(
     @SerializedName("error")
     val error: Boolean, // false
     @SerializedName("msg")
-    val msg: String // Data Load Successfully
+    val msg: String // Data loaded successfully.
 ) {
     data class Data(
-        @SerializedName("all_lead")
-        val allLead: AllLead,
-        @SerializedName("all_leads")
-        val allLeads: AllLeads,
-        @SerializedName("today_lead")
-        val todayLead: TodayLead,
-        @SerializedName("call_visit_schedule")
-        val callVisitSchedule: List<CallVisitSchedule>,
-        @SerializedName("visit_schedule")
-        val visitSchedule: List<VisitSchedule>,
-        @SerializedName("missed_followup")
-        val missedFollowup: List<MissedFollowup>,
-        @SerializedName("today_leads")
-        val todayLeads: TodayLeads
+        @SerializedName("expenses")
+        val expenses: List<Expense>,
+        @SerializedName("sales")
+        val sales: List<Sale>,
+        @SerializedName("total_customer")
+        val totalCustomer: TotalCustomer,
+        @SerializedName("total_expense")
+        val totalExpense: TotalExpense,
+        @SerializedName("total_sale")
+        val totalSale: TotalSale,
+        @SerializedName("total_vendor")
+        val totalVendor: TotalVendor
     ) {
-        data class AllLead(
-            @SerializedName("call_scheduled")
-            val callScheduled: String, // 0
-            @SerializedName("channel_partner")
-            val channelPartner: String, // 0
-            @SerializedName("converted_leads")
-            val convertedLeads: String, // 0
-            @SerializedName("interested_leads")
-            val interestedLeads: String, // 0
-            @SerializedName("new_leads")
-            val newLeads: String, // 2
-            @SerializedName("not_interested")
-            val notInterested: String, // 0
-            @SerializedName("not_picked")
-            val notPicked: String, // 0
-            @SerializedName("not_reachable")
-            val notReachable: String, // 0
-            @SerializedName("others")
-            val others: String, // 0
-            @SerializedName("pending_leads")
-            val pendingLeads: String, // 0
-            @SerializedName("processing_leads")
-            val processingLeads: String, // 1
-            @SerializedName("total_leads")
-            val totalLeads: Int, // 3
-            @SerializedName("visit_done")
-            val visitDone: String, // 0
-            @SerializedName("visit_scheduled")
-            val visitScheduled: String, // 0
-            @SerializedName("wrong_number")
-            val wrongNumber: String // 0
+        data class Expense(
+            @SerializedName("amount")
+            val amount: String, // 10.00
+            @SerializedName("build")
+            val build: String, // Billed
+            @SerializedName("created_at")
+            val createdAt: String, // 2024-05-31 18:24:50
+            @SerializedName("expense_category")
+            val expenseCategory: String, // Travel
+            @SerializedName("expense_date")
+            val expenseDate: String, // 2024-05-28
+            @SerializedName("expense_subcategory")
+            val expenseSubcategory: String, // Cab
+            @SerializedName("expense_type")
+            val expenseType: String, // Labour
+            @SerializedName("expenses_for")
+            val expensesFor: Any, // null
+            @SerializedName("file")
+            val `file`: String, // ../invoices/4918050264761121-title-(2).jpg
+            @SerializedName("id")
+            val id: Int, // 6
+            @SerializedName("ids")
+            val ids: Int, // 2
+            @SerializedName("invoice_id")
+            val invoiceId: Int, // 0
+            @SerializedName("name")
+            val name: String, // rtrt
+            @SerializedName("note")
+            val note: String, // xczxczxc
+            @SerializedName("payment_mode")
+            val paymentMode: String, // Cash
+            @SerializedName("ref_no")
+            val refNo: String, // 2422.1p][p]
+            @SerializedName("trans_id")
+            val transId: String,
+            @SerializedName("updated_at")
+            val updatedAt: Any, // null
+            @SerializedName("user_id")
+            val userId: Int, // 11
+            @SerializedName("vendor_id")
+            val vendorId: Int // 2
         )
 
-        data class AllLeads(
-            @SerializedName("total_leads")
-            val totalLeads: Int // 3
-        )
-        data class CallVisitSchedule(
-            @SerializedName("address")
-            val address: String,
-            @SerializedName("agent_id")
-            val agentId: Int,
-            @SerializedName("campaign")
-            val campaign: String,
-            @SerializedName("campaign_id")
-            val campaignId: String,
-            @SerializedName("category")
-            val category: String,
-            @SerializedName("category_id")
-            val categoryId: Int,
-            @SerializedName("city")
-            val city: String,
-            @SerializedName("classification")
-            val classification: String,
-            @SerializedName("classification_id")
-            val classificationId: Int,
-            @SerializedName("client_id")
-            val clientId: Int,
-            @SerializedName("comments")
-            val comments: String,
-            @SerializedName("created_date")
-            val createdDate: String,
-            @SerializedName("doa")
-            val doa: String,
-            @SerializedName("dob")
-            val dob: String,
-            @SerializedName("email")
-            val email: String,
+        data class Sale(
+            @SerializedName("company_id")
+            val companyId: Int, // 1
+            @SerializedName("created_at")
+            val createdAt: String, // 2024-05-29 17:27:30
+            @SerializedName("customer_id")
+            val customerId: Int, // 2
+            @SerializedName("customer_invoice")
+            val customerInvoice: Int, // 0
+            @SerializedName("due_date")
+            val dueDate: String, // 2024-05-31
+            @SerializedName("gst_type")
+            val gstType: String, // Outer GST
             @SerializedName("id")
-            val id: Int,
-            @SerializedName("last_updated")
-            val lastUpdated: String,
-            @SerializedName("mobile")
-            val mobile: String,
-            @SerializedName("name")
-            val name: String,
-            @SerializedName("project")
-            val project: String,
-            @SerializedName("project_id")
-            val projectId: Int,
-            @SerializedName("remind")
-            val remind: String,
-            @SerializedName("source")
-            val source: String,
-            @SerializedName("source_id")
-            val sourceId: Int,
-            @SerializedName("state")
-            val state: String,
-            @SerializedName("status")
-            val status: String,
-            @SerializedName("sub_category")
-            val subCategory: String,
-            @SerializedName("sub_category_id")
-            val subCategoryId: Int,
-            @SerializedName("type")
-            val type: String,
-            @SerializedName("type_id")
-            val typeId: Int
-        )
-        data class MissedFollowup(
-            @SerializedName("address")
-            val address: String,
-            @SerializedName("agent_id")
-            val agentId: Int,
-            @SerializedName("campaign")
-            val campaign: String,
-            @SerializedName("campaign_id")
-            val campaignId: String,
-            @SerializedName("category")
-            val category: String,
-            @SerializedName("category_id")
-            val categoryId: Int,
-            @SerializedName("city")
-            val city: String,
-            @SerializedName("classification")
-            val classification: String,
-            @SerializedName("classification_id")
-            val classificationId: Int,
-            @SerializedName("client_id")
-            val clientId: Int,
-            @SerializedName("comments")
-            val comments: String,
-            @SerializedName("created_date")
-            val createdDate: String,
-            @SerializedName("doa")
-            val doa: String,
-            @SerializedName("dob")
-            val dob: String,
-            @SerializedName("email")
-            val email: String,
-            @SerializedName("id")
-            val id: Int,
-            @SerializedName("last_updated")
-            val lastUpdated: String,
-            @SerializedName("mobile")
-            val mobile: String,
-            @SerializedName("name")
-            val name: String,
-            @SerializedName("project")
-            val project: String,
-            @SerializedName("project_id")
-            val projectId: Int,
-            @SerializedName("remind")
-            val remind: String,
-            @SerializedName("source")
-            val source: String,
-            @SerializedName("source_id")
-            val sourceId: Int,
-            @SerializedName("state")
-            val state: String,
-            @SerializedName("status")
-            val status: String,
-            @SerializedName("sub_category")
-            val subCategory: String,
-            @SerializedName("sub_category_id")
-            val subCategoryId: Int,
-            @SerializedName("type")
-            val type: String,
-            @SerializedName("type_id")
-            val typeId: Int
-        )
-        data class VisitSchedule(
-            @SerializedName("address")
-            val address: String,
-            @SerializedName("agent_id")
-            val agentId: Int,
-            @SerializedName("campaign")
-            val campaign: String,
-            @SerializedName("campaign_id")
-            val campaignId: String,
-            @SerializedName("category")
-            val category: String,
-            @SerializedName("category_id")
-            val categoryId: Int,
-            @SerializedName("city")
-            val city: String,
-            @SerializedName("classification")
-            val classification: String,
-            @SerializedName("classification_id")
-            val classificationId: Int,
-            @SerializedName("client_id")
-            val clientId: Int,
-            @SerializedName("comments")
-            val comments: String,
-            @SerializedName("created_date")
-            val createdDate: String,
-            @SerializedName("doa")
-            val doa: Any,
-            @SerializedName("dob")
-            val dob: Any,
-            @SerializedName("email")
-            val email: String,
-            @SerializedName("id")
-            val id: Int,
-            @SerializedName("last_updated")
-            val lastUpdated: String,
-            @SerializedName("mobile")
-            val mobile: String,
-            @SerializedName("name")
-            val name: String,
-            @SerializedName("project")
-            val project: String,
-            @SerializedName("project_id")
-            val projectId: Int,
-            @SerializedName("remind")
-            val remind: String,
-            @SerializedName("source")
-            val source: String,
-            @SerializedName("source_id")
-            val sourceId: Int,
-            @SerializedName("state")
-            val state: String,
-            @SerializedName("status")
-            val status: String,
-            @SerializedName("sub_category")
-            val subCategory: String,
-            @SerializedName("sub_category_id")
-            val subCategoryId: Int,
-            @SerializedName("type")
-            val type: String,
-            @SerializedName("type_id")
-            val typeId: Int
-        )
-        data class TodayLead(
-            @SerializedName("call_scheduled")
-            val callScheduled: String, // 0
-            @SerializedName("channel_partner")
-            val channelPartner: String, // 0
-            @SerializedName("converted_leads")
-            val convertedLeads: String, // 0
-            @SerializedName("interested_leads")
-            val interestedLeads: String, // 0
-            @SerializedName("new_leads")
-            val newLeads: String, // 2
-            @SerializedName("not_interested")
-            val notInterested: String, // 0
-            @SerializedName("not_picked")
-            val notPicked: String, // 0
-            @SerializedName("not_reachable")
-            val notReachable: String, // 0
-            @SerializedName("others")
-            val others: String, // 0
-            @SerializedName("pending_leads")
-            val pendingLeads: String, // 0
-            @SerializedName("processing_leads")
-            val processingLeads: String, // 1
-            @SerializedName("total_leads")
-            val totalLeads: Int, // 3
-            @SerializedName("visit_done")
-            val visitDone: String, // 0
-            @SerializedName("visit_scheduled")
-            val visitScheduled: String, // 0
-            @SerializedName("wrong_number")
-            val wrongNumber: String // 0
+            val id: Int, // 8
+            @SerializedName("invoice")
+            val invoice: String, // XYZ_9
+            @SerializedName("invoice_date")
+            val invoiceDate: String, // 2024-05-30
+            @SerializedName("is_billed")
+            val isBilled: String, // Billed
+            @SerializedName("payment_status")
+            val paymentStatus: String, // pending
+            @SerializedName("service_tax")
+            val serviceTax: String, // 2024.00
+            @SerializedName("updated_at")
+            val updatedAt: Any, // null
+            @SerializedName("user_id")
+            val userId: Int // 11
         )
 
-        data class TodayLeads(
-            @SerializedName("total_leads")
-            val totalLeads: Int // 3
+        data class TotalCustomer(
+            @SerializedName("total_customer")
+            val totalCustomer: Int // 1
+        )
+
+        data class TotalExpense(
+            @SerializedName("total_expense")
+            val totalExpense: String // 56.00
+        )
+
+        data class TotalSale(
+            @SerializedName("total_sale")
+            val totalSale: String // 0.00
+        )
+
+        data class TotalVendor(
+            @SerializedName("total_vendor")
+            val totalVendor: Int // 3
         )
     }
 }

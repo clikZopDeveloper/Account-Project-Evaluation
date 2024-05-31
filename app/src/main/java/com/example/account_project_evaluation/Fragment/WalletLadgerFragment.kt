@@ -116,7 +116,6 @@ class WalletLadgerFragment : Fragment(), ApiResponseListner {
             .setCancelable(false)
             .setPositiveButton("Yes") { dialog, id ->
                 // Delete selected note from database
-
             }
             .setNegativeButton("No") { dialog, id ->
                 // Dismiss the dialog

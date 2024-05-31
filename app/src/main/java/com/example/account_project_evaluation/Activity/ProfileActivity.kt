@@ -54,7 +54,7 @@ class ProfileActivity : AppCompatActivity(), ApiResponseListner,
         binding.igToolbar.ivMenu.visibility = View.VISIBLE
         binding.igToolbar.tvWalletBal.visibility=View.GONE
 
-        ApiContants.requestCameraPermission(this, PERMISSION_CODE)
+      //  ApiContants.requestCameraPermission(this, PERMISSION_CODE)
 
       //  val profileData = intent.getSerializableExtra("profileResponse") as ProfileBean.Data
       //  Log.d("zxvcxc", Gson().toJson(profileData))

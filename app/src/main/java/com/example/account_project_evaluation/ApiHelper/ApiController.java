@@ -120,7 +120,6 @@ public class ApiController {
     public void getApiPostCall(final String tag, Map<String, String> parm) {
 
         Single<JsonElement> call = apiClient.postCall(ApiContants.BaseUrl + tag, parm);
-
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<JsonElement>() {

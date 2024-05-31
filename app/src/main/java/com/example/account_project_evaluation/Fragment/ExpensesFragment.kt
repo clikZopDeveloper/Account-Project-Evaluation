@@ -47,7 +47,6 @@ class ExpensesFragment : Fragment(), ApiResponseListner {
         apiClient = ApiController(activity, this)
   //    ApiContants.movabalebutton(binding.fbAddArchitect,requireActivity())
 
-        apiGetExpenses()
 
         return root
     }
@@ -101,7 +100,8 @@ class ExpensesFragment : Fragment(), ApiResponseListner {
 
     override fun onResume() {
         super.onResume()
-        //   apiAllGet()
+        apiGetExpenses()
+
     }
 
 }

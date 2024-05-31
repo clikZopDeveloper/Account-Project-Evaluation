@@ -24,7 +24,6 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
 
-import com.example.account_project_evaluation.Model.StateBean;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -38,7 +37,7 @@ public class SalesApp extends Application implements Application.ActivityLifecyc
     public static String deviceId;
     public static boolean isAddAccessToken;
     public static boolean isUpComingSession = true;
-    public static ArrayList<StateBean.Data> stateList = new ArrayList<>();
+   // public static ArrayList<StateBean.Data> stateList = new ArrayList<>();
 
     public static Boolean isEnableScreenshort = true;
     @Override

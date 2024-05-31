@@ -9,9 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.account_project_evaluation.Activity.*
+import com.example.account_project_evaluation.Adapter.DashboardAdapter
+import com.example.account_project_evaluation.Adapter.HomeExpenseAdapter
+import com.example.account_project_evaluation.Adapter.HomeSaleAdapter
 import com.example.account_project_evaluation.ApiHelper.ApiController
 import com.example.account_project_evaluation.ApiHelper.ApiResponseListner
 import com.example.account_project_evaluation.Model.*
@@ -55,7 +59,7 @@ class HomeFragment : Fragment(), ApiResponseListner {
         //    ApiContants.movabalebutton(binding.fbAddArchitect,requireActivity())
 
         apiWalletLadger()
-
+        apiDashboard()
         binding.apply {
             cardAddSale.setOnClickListener {
                 requireActivity().startActivity(
@@ -86,19 +90,29 @@ class HomeFragment : Fragment(), ApiResponseListner {
         params["toDt"] = ""
         apiClient.getApiPostCall(ApiContants.GetWalletLadger, params)
     }
+    fun apiDashboard() {
+        SalesApp.isAddAccessToken = true
+        val params = Utility.getParmMap()
+        apiClient.progressView.showLoader()
+        apiClient.getApiPostCall(ApiContants.Dashboard, params)
+    }
 
     override fun success(tag: String?, jsonElement: JsonElement) {
         try {
             apiClient.progressView.hideLoader()
 
-            if (tag == ApiContants.getState) {
-                val stateBean = apiClient.getConvertIntoModel<StateBean>(
+            if (tag == ApiContants.Dashboard) {
+                val dashboardBean = apiClient.getConvertIntoModel<DashboardBean>(
                     jsonElement.toString(),
-                    StateBean::class.java
+                    DashboardBean::class.java
                 )
-                if (stateBean.error == false) {
-                    SalesApp.stateList.clear()
-                    SalesApp.stateList.addAll(stateBean.data)
+                if (dashboardBean.error == false) {
+                    handleSalesList(dashboardBean.data.sales)
+                    handleExpenseList(dashboardBean.data.expenses)
+                    handleDashboardList(dashboardBean.data)
+                }else{
+                    Toast.makeText(requireContext(), dashboardBean.msg, Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
             if (tag == ApiContants.GetWalletLadger) {
@@ -124,266 +138,84 @@ class HomeFragment : Fragment(), ApiResponseListner {
         Utility.showSnackBar(requireActivity(), errorMessage)
     }
 
+    fun handleDashboardList(data: DashboardBean.Data) {
+        binding.rcDashboard.layoutManager =
+            GridLayoutManager(requireContext(),2)
+        val mAllAdapter = DashboardAdapter(requireActivity(), getDashDataList(data), object :
+            RvStatusClickListner {
+            override fun clickPos(status: String, pos: Int) {
+
+            }
+        })
+        binding.rcDashboard.adapter = mAllAdapter
+        mAllAdapter.notifyDataSetChanged()
+        // rvMyAcFiled.isNestedScrollingEnabled = false
+    }
+
+    fun handleSalesList(data: List<DashboardBean.Data.Sale>) {
+        binding.rcSale.layoutManager =
+            LinearLayoutManager(requireContext())
+        val mAllAdapter = HomeSaleAdapter(requireActivity(),data, object :
+            RvStatusClickListner {
+            override fun clickPos(status: String, pos: Int) {
+            }
+        })
+        binding.rcSale.adapter = mAllAdapter
+        mAllAdapter.notifyDataSetChanged()
+        // rvMyAcFiled.isNestedScrollingEnabled = false
+    }
+    fun handleExpenseList(data: List<DashboardBean.Data.Expense>) {
+        binding.rcExpense.layoutManager =
+            LinearLayoutManager(requireContext())
+          val mAllAdapter = HomeExpenseAdapter(requireActivity(), data, object :
+            RvStatusClickListner {
+            override fun clickPos(status: String, pos: Int) {
+
+            }
+        })
+        binding.rcExpense.adapter = mAllAdapter
+        mAllAdapter.notifyDataSetChanged()
+        // rvMyAcFiled.isNestedScrollingEnabled = false
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    private fun getMenusAllLead(data: DashboardBean.Data.AllLead): ArrayList<MenuModelBean> {
+    private fun getDashDataList(data: DashboardBean.Data): ArrayList<MenuModelBean> {
         var menuList = ArrayList<MenuModelBean>()
         //  menuList.add(MenuModelBean(1, "Add Lead", data.newLeads.toString(), R.drawable.ic_dashbord))
-        menuList.add(MenuModelBean(2, "new lead", data.newLeads.toString(), R.drawable.ic_dashbord))
+        menuList.add(MenuModelBean(2, "Total Customer", data.totalCustomer.totalCustomer.toString(), R.drawable.ic_dashbord))
         menuList.add(
             MenuModelBean(
                 3,
-                "pending",
-                data.pendingLeads.toString(),
+                "Total Vendor",
+                data.totalVendor.totalVendor.toString(),
                 R.drawable.ic_dashbord
             )
         )
-        menuList.add(
-            MenuModelBean(
-                6,
-                "processed",
-                data.processingLeads.toString(),
-                R.drawable.ic_dashbord
-            )
-        )
+
         menuList.add(
             MenuModelBean(
                 4,
-                "converted",
-                data.convertedLeads.toString(),
+                "Total Sale",
+                data.totalSale.totalSale.toString(),
                 R.drawable.ic_dashbord
             )
         )
         menuList.add(
             MenuModelBean(
                 5,
-                "call scheduled",
-                data.callScheduled.toString(),
+                "Total Expense",
+                data.totalExpense.totalExpense.toString(),
                 R.drawable.ic_dashbord
             )
         )
 
-        menuList.add(
-            MenuModelBean(
-                8,
-                "visit scheduled",
-                data.visitScheduled.toString(),
-                R.drawable.ic_dashbord
-            )
-        )
-        menuList.add(
-            MenuModelBean(
-                9,
-                "visit done",
-                data.visitDone.toString(),
-                R.drawable.ic_dashbord
-            )
-        )
-
-/*
-         menuList.add(
-             MenuModelBean(
-                 11,
-                 "booked",
-                 data.convertedLeads.toString(),
-                 R.drawable.ic_dashbord
-             )
-         )*/
-/*
-  menuList.add(
-             MenuModelBean(
-                 11,
-                 "completed",
-                 data.convertedLeads.toString(),
-                 R.drawable.ic_dashbord
-             )
-         )
-
-          menuList.add(
-             MenuModelBean(
-                 11,
-                 "cancelled",
-                 data.convertedLeads.toString(),
-                 R.drawable.ic_dashbord
-             )
-         )
-*/
-
-        menuList.add(
-            MenuModelBean(
-                12,
-                "not interested",
-                data.notInterested.toString(),
-                R.drawable.ic_dashbord
-            )
-        )
-
-        menuList.add(
-            MenuModelBean(
-                13,
-                "not picked",
-                data.notPicked.toString(),
-                R.drawable.ic_dashbord
-            )
-        )
-        menuList.add(
-            MenuModelBean(
-                14,
-                "wrong number",
-                data.wrongNumber.toString(),
-                R.drawable.ic_dashbord
-            )
-        )
-        menuList.add(
-            MenuModelBean(
-                15,
-                "not reachable",
-                data.notReachable.toString(),
-                R.drawable.ic_dashbord
-            )
-        )
-        menuList.add(
-            MenuModelBean(
-                16,
-                "channel partner",
-                data.channelPartner.toString(),
-                R.drawable.ic_dashbord
-            )
-        )
 
         return menuList
     }
 
-    private fun getMenusTodayLead(data: DashboardBean.Data.TodayLead): ArrayList<MenuModelBean> {
-        var menuList = ArrayList<MenuModelBean>()
-        // menuList.add(MenuModelBean(1, "Add Lead", data.newLeads.toString(), R.drawable.ic_dashbord))
-        menuList.add(MenuModelBean(2, "new lead", data.newLeads.toString(), R.drawable.ic_dashbord))
-        menuList.add(
-            MenuModelBean(
-                3,
-                "pending",
-                data.pendingLeads.toString(),
-                R.drawable.ic_dashbord
-            )
-        )
-        menuList.add(
-            MenuModelBean(
-                6,
-                "processed",
-                data.processingLeads.toString(),
-                R.drawable.ic_dashbord
-            )
-        )
-        menuList.add(
-            MenuModelBean(
-                4,
-                "converted",
-                data.convertedLeads.toString(),
-                R.drawable.ic_dashbord
-            )
-        )
-        menuList.add(
-            MenuModelBean(
-                5,
-                "call scheduled",
-                data.callScheduled.toString(),
-                R.drawable.ic_dashbord
-            )
-        )
-
-        menuList.add(
-            MenuModelBean(
-                8,
-                "visit scheduled",
-                data.visitScheduled.toString(),
-                R.drawable.ic_dashbord
-            )
-        )
-        menuList.add(
-            MenuModelBean(
-                9,
-                "visit done",
-                data.visitDone.toString(),
-                R.drawable.ic_dashbord
-            )
-        )
-
-/*
-         menuList.add(
-             MenuModelBean(
-                 11,
-                 "booked",
-                 data.convertedLeads.toString(),
-                 R.drawable.ic_dashbord
-             )
-         )*/
-/*
-  menuList.add(
-             MenuModelBean(
-                 11,
-                 "completed",
-                 data.convertedLeads.toString(),
-                 R.drawable.ic_dashbord
-             )
-         )
-
-          menuList.add(
-             MenuModelBean(
-                 11,
-                 "cancelled",
-                 data.convertedLeads.toString(),
-                 R.drawable.ic_dashbord
-             )
-         )
-*/
-
-        menuList.add(
-            MenuModelBean(
-                12,
-                "not interested",
-                data.notInterested.toString(),
-                R.drawable.ic_dashbord
-            )
-        )
-
-        menuList.add(
-            MenuModelBean(
-                13,
-                "not picked",
-                data.notPicked.toString(),
-                R.drawable.ic_dashbord
-            )
-        )
-        menuList.add(
-            MenuModelBean(
-                14,
-                "wrong number",
-                data.wrongNumber.toString(),
-                R.drawable.ic_dashbord
-            )
-        )
-        menuList.add(
-            MenuModelBean(
-                15,
-                "not reachable",
-                data.notReachable.toString(),
-                R.drawable.ic_dashbord
-            )
-        )
-        menuList.add(
-            MenuModelBean(
-                16,
-                "channel partner",
-                data.channelPartner.toString(),
-                R.drawable.ic_dashbord
-            )
-        )
-
-        return menuList
-    }
 
     fun callPGURL(url: String) {
         Log.d("weburl", url)

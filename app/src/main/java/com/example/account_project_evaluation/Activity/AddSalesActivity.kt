@@ -104,50 +104,14 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
                     Log.d("werwer", Gson().toJson(list))
                     handleProductList(list)
                 }
-
-
             }
 
             editSalesDate.setOnClickListener(View.OnClickListener {
-                val c = Calendar.getInstance()
-                val year = c[Calendar.YEAR]
-                val month = c[Calendar.MONTH]
-                val day = c[Calendar.DAY_OF_MONTH]
-                val datePickerDialog = DatePickerDialog(
-                    this@AddSalesActivity, { view, year, monthOfYear, dayOfMonth ->
-                        //  dob.setText(dateofnews);
-                        //    val dateofnews = "${dayOfMonth.toString() + "/" + (monthOfYear + 1).toString() + "/" + year}"
-                        val dateofnews =
-                            "${year.toString() + "-" + (monthOfYear + 1).toString() + "-" + dayOfMonth.toString()}"
-
-                        //   val dateofnews = (monthOfYear + 1).toString() + "/" + dayOfMonth + "/" + year
-
-                        editSalesDate.setText(dateofnews)
-                    },
-                    year, month, day
-                )
-                datePickerDialog.show()
+                ApiContants.showDate(activity,editSalesDate)
             })
 
             editDueDate.setOnClickListener(View.OnClickListener {
-                val c = Calendar.getInstance()
-                val year = c[Calendar.YEAR]
-                val month = c[Calendar.MONTH]
-                val day = c[Calendar.DAY_OF_MONTH]
-                val datePickerDialog = DatePickerDialog(
-                    this@AddSalesActivity, { view, year, monthOfYear, dayOfMonth ->
-                        //  dob.setText(dateofnews);
-                        //    val dateofnews = "${dayOfMonth.toString() + "/" + (monthOfYear + 1).toString() + "/" + year}"
-                        val dateofnews =
-                            "${year.toString() + "-" + (monthOfYear + 1).toString() + "-" + dayOfMonth.toString()}"
-
-                        //   val dateofnews = (monthOfYear + 1).toString() + "/" + dayOfMonth + "/" + year
-
-                        editDueDate.setText(dateofnews)
-                    },
-                    year, month, day
-                )
-                datePickerDialog.show()
+                ApiContants.showDate(activity,editSalesDate)
             })
 
             btnSubmit.setOnClickListener {

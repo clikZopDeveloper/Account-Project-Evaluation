@@ -1,17 +1,25 @@
 package com.stpl.antimatter.Utils
 
 import android.Manifest
+import android.R
 import android.app.Activity
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.MediaStore
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
 import android.view.ViewGroup.MarginLayoutParams
-import android.widget.TextView
+import android.widget.*
 import androidx.core.app.ActivityCompat
+import com.example.account_project_evaluation.Model.CompanyBean
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.gson.Gson
+import java.util.*
 
 public class ApiContants {
     companion object {
@@ -57,6 +65,7 @@ public class ApiContants {
         //        api Tags
         const val login = "login"
         const val logout = "logout"
+        const val Dashboard = "dashboard"
         const val getCity = "get-city"
         const val getState = "get-state"
         const val getVendorLabour = "get-vendor-labour"
@@ -68,14 +77,9 @@ public class ApiContants {
         const val getExpenses = "get-expense"
         const val getAddSale = "add-sale"
         const val getAddExpeses = "add-expense"
-
-
+        const val GetWalletLadger = "wallet-ladger"
 /////////////////////////////////////////////
 
-        const val dashboard = "dashboard"
-        const val GetWalletLadger = "wallet-ladger"
-        const val GetUpdateTask = "update-task"
-        const val GetAddTask = "add-task"
         const val getProfile = "get-profile"
         const val getPasswordChange = "change-password"
 
@@ -120,6 +124,56 @@ public class ApiContants {
                 ),
                 PERMISSION_CODE
             )
+        }
+
+        ///////////////////////Toast Message//////////////////
+        fun showToastMsg(context: Context,msg:String){
+            Toast.makeText(
+                context,
+                msg,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        ///////////////////////////Date Time/////////////////////
+
+        fun showDate(context: Context, editDate: EditText){
+            val c = Calendar.getInstance()
+            val year = c[Calendar.YEAR]
+            val month = c[Calendar.MONTH]
+            val day = c[Calendar.DAY_OF_MONTH]
+            val datePickerDialog = DatePickerDialog(
+                context,
+                { view, year, monthOfYear, dayOfMonth ->
+                    //  dob.setText(dateofnews);
+                    //   val dateofnews = "${year.toString() + "-" + (monthOfYear + 1).toString() + "-" + dayOfMonth.toString()}"
+                    //   MM-DD-YYYY
+                    val dateofnews ="${year.toString() + "-" + (monthOfYear + 1).toString() + "-" + dayOfMonth.toString()}"
+
+                    editDate.setText(dateofnews)
+                },
+                year, month, day
+            )
+            datePickerDialog.show()
+        }
+
+        fun showTime(context: Context, editTime: EditText) {
+            val calendar = Calendar.getInstance();
+            val hour: Int = calendar!!.get(Calendar.HOUR_OF_DAY)
+            val min: Int = calendar!!.get(Calendar.MINUTE)
+            editTime.setOnClickListener {
+                val timePickerDialog = TimePickerDialog(
+                    context,
+                    TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                        editTime.setText(
+                            "$hourOfDay:$minute"
+                        )
+                    },
+                    hour,
+                    min,
+                    false
+                )
+                timePickerDialog.show()
+            }
         }
 
 

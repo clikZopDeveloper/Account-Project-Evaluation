@@ -16,7 +16,7 @@
 
         <include
             android:id="@+id/igToolbar"
-            layout="@layout/toolbar" />
+            layout="@layout/toolbaractivity" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -33,6 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
+                    android:layout_marginTop="@dimen/_5dip"
                     android:text="Upload Picture"
                     android:textColor="@color/black"
                     android:textSize="14sp"
