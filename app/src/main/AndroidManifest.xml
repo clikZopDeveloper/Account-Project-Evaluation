@@ -37,9 +37,10 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Activity.RegisterActivity"
+            android:name=".Activity.WebviewActivity"
             android:exported="false"
             android:launchMode="singleTop" />
+
         <activity
             android:name=".Activity.PasswordChnageActivity"
             android:exported="false"

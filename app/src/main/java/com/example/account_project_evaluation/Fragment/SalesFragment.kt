@@ -139,8 +139,8 @@ class SalesFragment : Fragment(), ApiResponseListner {
             LinearLayoutManager(requireContext())
         val mAllAdapter = GetSaleAdapter(requireActivity(), data, object :
             RvStatusClickListner {
-            override fun clickPos(status: String, pos: Int) {
-
+            override fun clickPos(link: String, pos: Int) {
+requireActivity().startActivity(Intent(requireActivity(),WebviewActivity::class.java).putExtra("invoiceUrl",link))
             }
         })
         binding.rcSales.adapter = mAllAdapter

@@ -134,7 +134,7 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
         SalesApp.isAddAccessToken = true
         val params = Utility.getParmMap()
         apiClient.progressView.showLoader()
-        apiClient.getApiPostCall(ApiContants.getCategory, params)
+        apiClient.getApiPostCall(ApiContants.getExpenseCategory, params)
         apiClient.getApiPostCall(ApiContants.getCustomer, params)
     }
 
@@ -160,7 +160,7 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
         val params = Utility.getParmMap()
         params["category_name"] = catName
         apiClient.progressView.showLoader()
-        apiClient.getApiPostCall(ApiContants.getSubCategory, params)
+        apiClient.getApiPostCall(ApiContants.getExpenseSubCategory, params)
     }
 
     override fun success(tag: String?, jsonElement: JsonElement) {
@@ -180,7 +180,7 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
 
                 }
             }
-            if (tag == ApiContants.getCategory) {
+            if (tag == ApiContants.getExpenseCategory) {
                 val categoryBean = apiClient.getConvertIntoModel<CategoryBean>(
                     jsonElement.toString(),
                     CategoryBean::class.java
@@ -192,7 +192,7 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
                 }
             }
 
-            if (tag == ApiContants.getSubCategory) {
+            if (tag == ApiContants.getExpenseSubCategory) {
                 val subCatBean = apiClient.getConvertIntoModel<SubCategoryBean>(
                     jsonElement.toString(),
                     SubCategoryBean::class.java

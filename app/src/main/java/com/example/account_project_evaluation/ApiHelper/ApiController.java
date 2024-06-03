@@ -100,7 +100,6 @@ public class ApiController {
                         } else {
                             responseListner.failure(tag, jsonElement.toString());
                         }
-
                     }
 
                     @Override
@@ -131,7 +130,7 @@ public class ApiController {
 
                         if (baseResponse.getError()==false) {
                             responseListner.success(tag, jsonElement);
-                        }else if (baseResponse.getError()==true && baseResponse.getMsg().equals("Unauthorized Required")) {
+                        }else if (baseResponse.getError()==true && baseResponse.getMsg().equals("Unauthorized request.")) {
                             Toast.makeText(context, "Logout Successfully", Toast.LENGTH_SHORT).show();
                             PrefManager.clear();
                             GeneralUtilities.launchActivity((AppCompatActivity) context, LoginActivity.class);

@@ -46,6 +46,7 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
     val PERMISSION_CODE = 12345
     val CAMERA_PERMISSION_CODE1 = 123
     var SELECT_PICTURES1 = 1
+    var catID = ""
     var catName = ""
     var subCatName = ""
     var file2: File? = null
@@ -54,7 +55,7 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
     val builledType = listOf("Billed", "Not Billed")
     val GSTType = listOf("Outer GST", "Inner GST")
     val ItemGSTType = listOf("Include", "Exclude")
-    val TCS = listOf("0", "5", "15.99573", "20")
+    val TCS = listOf("0", "5", "15", "20")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,7 +98,8 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
                         binding.editQty.text.toString(),
                         binding.editPrice.text.toString(),
                         binding.SelectGST.text.toString(),
-                        binding.editCommisionPerQty.text.toString()
+                        binding.editCommisionPerQty.text.toString(),
+                        binding.SelectGSTType.text.toString()
                     )
                     list.add(multiple)
 
@@ -111,7 +113,7 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
             })
 
             editDueDate.setOnClickListener(View.OnClickListener {
-                ApiContants.showDate(activity,editSalesDate)
+                ApiContants.showDate(activity,editDueDate)
             })
 
             btnSubmit.setOnClickListener {
@@ -127,6 +129,7 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
         apiClient.getApiPostCall(ApiContants.getCategory, params)
         apiClient.getApiPostCall(ApiContants.getCustomer, params)
         apiClient.getApiPostCall(ApiContants.getCompany, params)
+        apiClient.getApiPostCall(ApiContants.getGST, params)
     }
 
     fun apiAddSale() {
@@ -136,27 +139,21 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
         params["customer_id"] = customerID
         params["prod_list"] = Gson().toJson(list)
         params["due_date"] = binding.editDueDate.text.toString()
-        params["service_tax"] = binding.editDueDate.text.toString()//
+        params["service_tax"] = binding.SelectTCS.text.toString()
         params["invoice_date"] = binding.editSalesDate.text.toString()
         params["gst_type_mst"] = binding.SelectGSTType.text.toString()
         params["is_billed"] = binding.SelectBilled.text.toString()
         apiClient.progressView.showLoader()
+        Log.d("sdfgsdfhg",Gson().toJson(params))
         apiClient.getApiPostCall(ApiContants.getAddSale, params)
     }
 
-    fun apiSale(custID: String) {
-        SalesApp.isAddAccessToken = true
-        val params = Utility.getParmMap()
-        params["customer_id"] = custID
-        apiClient.progressView.showLoader()
-        apiClient.getApiPostCall(ApiContants.getSale, params)
-    }
 
 
     fun apiSubCategory() {
         SalesApp.isAddAccessToken = true
         val params = Utility.getParmMap()
-        params["category_name"] = catName
+        params["category_id"] = catID
         apiClient.progressView.showLoader()
         apiClient.getApiPostCall(ApiContants.getSubCategory, params)
     }
@@ -222,15 +219,15 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
                 }
             }
 
-            if (tag == ApiContants.getSale) {
-                val categoryBean = apiClient.getConvertIntoModel<SalesBean>(
+            if (tag == ApiContants.getGST) {
+                val gstBean = apiClient.getConvertIntoModel<GSTBean>(
                     jsonElement.toString(),
-                    SalesBean::class.java
+                    GSTBean::class.java
                 )
-                if (categoryBean.error == false) {
+                if (gstBean.error == false) {
                     //  catList = categoryBean.data
-                    Log.d("asdasd", Gson().toJson(categoryBean.data))
-                    setGST(categoryBean.data)
+                    Log.d("asdasd", Gson().toJson(gstBean.data))
+                    setGST(gstBean.data)
                 }
             }
 
@@ -248,10 +245,10 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
 
     }
 
-    fun setGST(data: List<SalesBean.Data>) {
+    fun setGST(data: List<GSTBean.Data>) {
         val state = arrayOfNulls<String>(data.size)
         for (i in data.indices) {
-            state[i] = data.get(i).invoice
+            state[i] = data.get(i).gst
         }
 
         val adapte1: ArrayAdapter<String?>
@@ -262,11 +259,11 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
         )
         binding.SelectGST.setAdapter(adapte1)
         binding.SelectGST.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
-            Log.d("xcvxcvc", Gson().toJson(data.get(position).invoice))
+            Log.d("xcvxcvc", Gson().toJson(data.get(position).gst))
             // catInvoice=data.get(position).invoice.toString()
             setGST(data)
             for (i in data.indices) {
-                if (data.get(i).invoice.equals(parent.getItemAtPosition(position))) {
+                if (data.get(i).gst.equals(parent.getItemAtPosition(position))) {
                     Log.d("StateID", data.get(i).id.toString())
 
 
@@ -414,7 +411,7 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
                 if (data.get(i).name.equals(parent.getItemAtPosition(position))) {
                     Log.d("StateID", data.get(i).id.toString())
                     customerID = data.get(i).id.toString()
-                    apiSale(data.get(i).id.toString())
+
                     setCustomer(data)
 
                 }
@@ -470,15 +467,15 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
         binding.SelectCategory.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
             Log.d("xcvxcvc", Gson().toJson(data.get(position).name))
             catName = data.get(position).name.toString()
-            apiSubCategory()
+
             setCategory(data)
-            /* for (i in data.indices) {
+             for (i in data.indices) {
                  if (data.get(i).name.equals(parent.getItemAtPosition(position))) {
                      Log.d("StateID", data.get(i).id.toString())
-
-
+                     catID=data.get(i).id.toString()
+                     apiSubCategory()
                  }
-             }*/
+             }
         })
         adapte1.notifyDataSetChanged()
     }
@@ -499,13 +496,14 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
         binding.SelectSubCategory.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
             Log.d("xcvxcvc", Gson().toJson(data.get(position).name))
             subCatName = data.get(position).name.toString()
-            for (i in data.indices) {
+            apiSubCategory()
+         /*   for (i in data.indices) {
                 if (data.get(i).name.equals(parent.getItemAtPosition(position))) {
                     Log.d("StateID", data.get(i).id.toString())
                     //      setCategory(data)
-                    apiSubCategory()
+
                 }
-            }
+            }*/
         })
         adapte1.notifyDataSetChanged()
 

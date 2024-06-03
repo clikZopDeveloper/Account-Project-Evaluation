@@ -164,6 +164,7 @@ class HomeFragment : Fragment(), ApiResponseListner {
         mAllAdapter.notifyDataSetChanged()
         // rvMyAcFiled.isNestedScrollingEnabled = false
     }
+
     fun handleExpenseList(data: List<DashboardBean.Data.Expense>) {
         binding.rcExpense.layoutManager =
             LinearLayoutManager(requireContext())
@@ -177,6 +178,7 @@ class HomeFragment : Fragment(), ApiResponseListner {
         mAllAdapter.notifyDataSetChanged()
         // rvMyAcFiled.isNestedScrollingEnabled = false
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

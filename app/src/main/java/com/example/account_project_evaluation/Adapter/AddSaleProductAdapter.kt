@@ -37,13 +37,14 @@ class AddSaleProductAdapter(
              holder.tvOff.background = RoundView(context.resources.getColor(R.color.orange), RoundView.getRadius(20f))
              holder.tvAdd.visibility = View.VISIBLE*/
 
-        holder.tvCatName.text = list[position].catName
-        holder.tvSubCatName.text = list[position].subCatName
+        holder.tvCatName.text = list[position].prod_category
+        holder.tvSubCatName.text = list[position].prod_subcategory
         holder.tvPrice.text = ApiContants.currency+list[position].price
         holder.tvQty.text = "QTY : "+list[position].qty
         holder.tvGST.text = list[position].gst.toString()
         holder.tvDecription.text = list[position].description
-        holder.tvCOMMISION.text = list[position].comissionPerQty
+        holder.tvCOMMISION.text = list[position].commision
+      //  holder.tvCOMMISION.text = list[position].commision
 
         holder.itemView.setOnClickListener {
             //  rvClickListner.clickPos(list[position].indexId)

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -36,6 +37,7 @@ class GetSaleAdapter(
              holder.tvOff.background = RoundView(context.resources.getColor(R.color.orange), RoundView.getRadius(20f))
              holder.tvAdd.visibility = View.VISIBLE*/
 
+        holder.llInvoice.visibility=View.VISIBLE
         holder.tvInvoice.text = list[position].invoice
         holder.tvGSTType.text = list[position].gstType
         holder.tvPaymentStatus.text = list[position].paymentStatus
@@ -57,10 +59,12 @@ class GetSaleAdapter(
                     R.color.paymentsdk_color_red
                 )
             );
-
         }
-        holder.itemView.setOnClickListener {
-            //  rvClickListner.clickPos(list[position].indexId)
+        holder.tvViewAdminInvoice.setOnClickListener {
+             rvClickListner.clickPos(list[position].adminCopy,list[position].id)
+        }
+        holder.tvViewCustInvoice.setOnClickListener {
+             rvClickListner.clickPos(list[position].customerCopy,list[position].id)
         }
     }
 
@@ -74,6 +78,9 @@ class GetSaleAdapter(
         val tvGSTType: TextView = itemview.findViewById(R.id.tvGSTType)
         val tvIsBilled: TextView = itemview.findViewById(R.id.tvIsBilled)
         val tvDueDate: TextView = itemview.findViewById(R.id.tvDueDate)
+        val tvViewAdminInvoice: TextView = itemview.findViewById(R.id.tvViewAdminInvoice)
+        val tvViewCustInvoice: TextView = itemview.findViewById(R.id.tvViewCustInvoice)
+        val llInvoice: LinearLayout = itemview.findViewById(R.id.llInvoice)
     }
 
 }
