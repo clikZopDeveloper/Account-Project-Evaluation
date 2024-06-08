@@ -17,6 +17,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
 import com.example.account_project_evaluation.ApiHelper.ApiController
 import com.example.account_project_evaluation.ApiHelper.ApiResponseListner
 import com.example.account_project_evaluation.Model.*
@@ -51,29 +52,71 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
     var vendorID = ""
     var catName = ""
     var subCatName = ""
+    var id = ""
+    var invoiceID = ""
+
     var vendorLabourName = ""
     var file2: File? = null
     var myReceiver: ConnectivityListener? = null
     var activity: Activity = this
-    val expenseType = listOf("Vendor","Labour","TA/DA")
-    val builledType = listOf("Billed","Not Billed")
-    val paymentModeType = listOf("Bank Transfer","Cheque","Cash")
-    val activeType = listOf("Yes","No")
+    val expenseType = listOf("Vendor", "Labour", "TA/DA")
+    val builledType = listOf("Billed", "Not Billed")
+    val paymentModeType = listOf("Bank Transfer", "Cheque", "Cash")
+    val activeType = listOf("Yes", "No")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_expense)
-        if (SalesApp.isEnableScreenshort==true){
-            window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
+        if (SalesApp.isEnableScreenshort == true) {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_SECURE,
+                WindowManager.LayoutParams.FLAG_SECURE
+            )
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         myReceiver = ConnectivityListener()
-        binding.igToolbar.tvTitle.text = "Add Expenses"
+
         binding.igToolbar.ivMenu.setImageDrawable(resources.getDrawable(R.drawable.ic_back_black))
         binding.igToolbar.ivMenu.setOnClickListener { finish() }
-        binding.igToolbar.ivMenu.visibility=View.VISIBLE
-        binding.igToolbar.tvWalletBal.visibility=View.GONE
+        binding.igToolbar.ivMenu.visibility = View.VISIBLE
+        binding.igToolbar.tvWalletBal.visibility = View.GONE
         apiClient = ApiController(activity, this)
+        val wayType = intent.getStringExtra("way")
+        if (wayType.equals("EditExpense")) {
+
+            binding.igToolbar.tvTitle.text = "Edit Expenses"
+            val expesneRsposne =
+                intent.getSerializableExtra("expenseResponse") as GetExpensesBean.Data
+            binding.apply {
+                Glide.with(this@AddExpensesActivity).load(ApiContants.BaseUrl + expesneRsposne.file)
+                    .into(btnAadharFront)
+                id=expesneRsposne.id.toString()
+
+                customerID=expesneRsposne.id.toString()
+                vendorID=expesneRsposne.vendorId.toString()
+                invoiceID=expesneRsposne.invoiceId.toString()
+
+                SelectBilled.setText(expesneRsposne.build)
+                editName.setText(expesneRsposne.name)
+                editNote.setText(expesneRsposne.note)
+                SelectCategory.setText(expesneRsposne.expenseCategory)
+                SelectSubCategory.setText(expesneRsposne.expenseSubcategory)
+                editExpensesDate.setText(expesneRsposne.expenseDate)
+                editExpenseAmount.setText(expesneRsposne.amount.toString())
+                    SelectCustomer.setText(expesneRsposne.customerName.toString())
+             //    SelectSale.setText(expesneRsposne.sa.toString())
+                SelectExpenseType.setText(expesneRsposne.expenseType.toString())
+                SelectVendorLabour.setText(expesneRsposne.vendorName.toString())
+                SelectPaymentMode.setText(expesneRsposne.paymentMode.toString())
+                editRefNumber.setText(expesneRsposne.refNo.toString())
+
+            }
+
+        } else {
+            binding.igToolbar.tvTitle.text = "Add Expenses"
+            id=""
+        }
+
         allGetApi()
         setExpenseType(expenseType)
         setBuilled(builledType)
@@ -87,7 +130,7 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
             }
 
             editExpensesDate.setOnClickListener(View.OnClickListener {
-                ApiContants.showDate(activity,editExpensesDate)
+                ApiContants.showDate(activity, editExpensesDate)
             })
 
             btnSubmit.setOnClickListener {
@@ -102,6 +145,8 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
 
         val builder = MultipartBody.Builder()
         builder.setType(MultipartBody.FORM)
+
+        builder.addFormDataPart("expense_id", id)
         builder.addFormDataPart("customer_id", customerID)
         builder.addFormDataPart("amount", binding.editExpenseAmount.text.toString())
         builder.addFormDataPart("name", binding.editName.text.toString())
@@ -109,21 +154,21 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
         builder.addFormDataPart("expense_subcategory", binding.SelectSubCategory.text.toString())
         builder.addFormDataPart("expense_date", binding.editExpensesDate.text.toString())
         builder.addFormDataPart("payment_mode", binding.SelectPaymentMode.text.toString())
-        builder.addFormDataPart("trans_id","")
+        builder.addFormDataPart("trans_id", "")
         builder.addFormDataPart("note", binding.editNote.text.toString())
         builder.addFormDataPart("ref_no", binding.editRefNumber.text.toString())
         builder.addFormDataPart("vendor_id", vendorID.toString())
         builder.addFormDataPart("expense_type", binding.SelectExpenseType.text.toString())
-        builder.addFormDataPart("invoice_id", "")
+        builder.addFormDataPart("invoice_id", invoiceID)
         builder.addFormDataPart("billed", binding.SelectBilled.text.toString())
 
-        if (file2!=null){
+        if (file2 != null) {
             builder.addFormDataPart(
                 "file", file2?.name,
                 RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file2!!)
             )
-        }else{
-            file2=null
+        } else {
+            file2 = null
         }
 
         apiClient.progressView.showLoader()
@@ -173,10 +218,12 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
                 )
                 if (categoryBean.error == false) {
                     //  catList = categoryBean.data
-                  Toast.makeText(this@AddExpensesActivity,categoryBean.msg,Toast.LENGTH_SHORT).show()
-                   finish()
-                }else{
-                    Toast.makeText(this@AddExpensesActivity,categoryBean.msg,Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AddExpensesActivity, categoryBean.msg, Toast.LENGTH_SHORT)
+                        .show()
+                    finish()
+                } else {
+                    Toast.makeText(this@AddExpensesActivity, categoryBean.msg, Toast.LENGTH_SHORT)
+                        .show()
 
                 }
             }
@@ -187,7 +234,7 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
                 )
                 if (categoryBean.error == false) {
                     //  catList = categoryBean.data
-                    Log.d("asdasd",Gson().toJson(categoryBean.data))
+                    Log.d("asdasd", Gson().toJson(categoryBean.data))
                     setCategory(categoryBean.data)
                 }
             }
@@ -208,7 +255,7 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
                     CustomerBean::class.java
                 )
                 if (customerBean.error == false) {
-                    Log.d("asdasd",Gson().toJson(customerBean.data))
+                    Log.d("asdasd", Gson().toJson(customerBean.data))
                     setCustomer(customerBean.data)
                 }
             }
@@ -220,7 +267,7 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
                 )
                 if (categoryBean.error == false) {
                     //  catList = categoryBean.data
-                    Log.d("asdasd",Gson().toJson(categoryBean.data))
+                    Log.d("asdasd", Gson().toJson(categoryBean.data))
                     setSales(categoryBean.data)
                 }
             }
@@ -232,7 +279,7 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
                 )
                 if (vendorLabourBean.error == false) {
                     //  catList = categoryBean.data
-                    Log.d("asdasd",Gson().toJson(vendorLabourBean.data))
+                    Log.d("asdasd", Gson().toJson(vendorLabourBean.data))
                     setVendorLabour(vendorLabourBean.data)
                 }
             }
@@ -265,11 +312,12 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
         binding.SelectSale.setAdapter(adapte1)
         binding.SelectSale.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
             Log.d("xcvxcvc", Gson().toJson(data.get(position).invoice))
-           // catInvoice=data.get(position).invoice.toString()
+            // catInvoice=data.get(position).invoice.toString()
             setSales(data)
             for (i in data.indices) {
                 if (data.get(i).invoice.equals(parent.getItemAtPosition(position))) {
                     Log.d("StateID", data.get(i).id.toString())
+                    invoiceID=data.get(i).id.toString()
                 }
             }
         })
@@ -292,51 +340,51 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
         binding.SelectExpenseType.setAdapter(adapte1)
         binding.SelectExpenseType.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
             Log.d("xcvxcvc", Gson().toJson(data.get(position)))
-            vendorLabourName=data.get(position)
+            vendorLabourName = data.get(position)
             setExpenseType(data)
-            if (data.get(position).equals("Vendor")){
-                binding.inputVendor.visibility=View.VISIBLE
+            if (data.get(position).equals("Vendor")) {
+                binding.inputVendor.visibility = View.VISIBLE
                 binding.inputVendor.setHint("Select Vendor")
-             //   binding.inputLabour.visibility=View.GONE
-            }else if (data.get(position).equals("Labour")){
+                //   binding.inputLabour.visibility=View.GONE
+            } else if (data.get(position).equals("Labour")) {
                 binding.inputVendor.setHint("Select Labour")
-                binding.inputVendor.visibility=View.VISIBLE
-            //    binding.inputLabour.visibility=View.VISIBLE
-            }else{
-                binding.inputVendor.visibility=View.GONE
-              //  binding.inputLabour.visibility=View.GONE
+                binding.inputVendor.visibility = View.VISIBLE
+                //    binding.inputLabour.visibility=View.VISIBLE
+            } else {
+                binding.inputVendor.visibility = View.GONE
+                //  binding.inputLabour.visibility=View.GONE
             }
             apiVendorLabour()
-           /* for (i in data.indices) {
-                if (data.get(i).invoice.equals(parent.getItemAtPosition(position))) {
-                    Log.d("StateID", data.get(i).id.toString())
+            /* for (i in data.indices) {
+                 if (data.get(i).invoice.equals(parent.getItemAtPosition(position))) {
+                     Log.d("StateID", data.get(i).id.toString())
 
 
-                }
-            }*/
+                 }
+             }*/
         })
         adapte1.notifyDataSetChanged()
 
     }
 
     fun setBuilled(data: List<String>) {
-     /*   val arr_bnk_List = ArrayList<String>()
-        for (i in 0 until data.size) {
-            arr_bnk_List.add( java.lang.String.valueOf(data.get(i)))
-        }
+        /*   val arr_bnk_List = ArrayList<String>()
+           for (i in 0 until data.size) {
+               arr_bnk_List.add( java.lang.String.valueOf(data.get(i)))
+           }
 
-        binding.SelectBilled.setAdapter(
-            ArrayAdapter(
-                this@AddExpensesActivity,
-                android.R.layout.simple_list_item_1,
-                arr_bnk_List
-            )
-        )
+           binding.SelectBilled.setAdapter(
+               ArrayAdapter(
+                   this@AddExpensesActivity,
+                   android.R.layout.simple_list_item_1,
+                   arr_bnk_List
+               )
+           )
 
-        binding.SelectBilled.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
-            //countryIDD = response.body().getCountrylist().get(position).getId()
-        })
-        binding.SelectBilled.setThreshold(1)*/
+           binding.SelectBilled.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
+               //countryIDD = response.body().getCountrylist().get(position).getId()
+           })
+           binding.SelectBilled.setThreshold(1)*/
 
 
         val state = arrayOfNulls<String>(data.size)
@@ -353,14 +401,14 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
         binding.SelectBilled.setAdapter(adapte1)
         binding.SelectBilled.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
             Log.d("xcvxcvc", Gson().toJson(data.get(position)))
-            catName=data.get(position)
-           /* for (i in data.indices) {
-                if (data.get(i).name.equals(parent.getItemAtPosition(position))) {
-                    Log.d("StateID", data.get(i).id.toString())
-                    setBuilled(data)
+            catName = data.get(position)
+            /* for (i in data.indices) {
+                 if (data.get(i).name.equals(parent.getItemAtPosition(position))) {
+                     Log.d("StateID", data.get(i).id.toString())
+                     setBuilled(data)
 
-                }
-            }*/
+                 }
+             }*/
             setBuilled(data)
         })
         adapte1.notifyDataSetChanged()
@@ -412,11 +460,11 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
         binding.SelectCustomer.setAdapter(adapte1)
         binding.SelectCustomer.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
             Log.d("xcvxcvc", Gson().toJson(data.get(position).name))
-            catName=data.get(position).name.toString()
+            catName = data.get(position).name.toString()
             for (i in data.indices) {
                 if (data.get(i).name.equals(parent.getItemAtPosition(position))) {
                     Log.d("StateID", data.get(i).id.toString())
-                    customerID=data.get(i).id.toString()
+                    customerID = data.get(i).id.toString()
                     apiSale(data.get(i).id.toString())
                     setCustomer(data)
 
@@ -442,16 +490,16 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
         binding.SelectCategory.setAdapter(adapte1)
         binding.SelectCategory.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
             Log.d("xcvxcvc", Gson().toJson(data.get(position).name))
-            catName=data.get(position).name.toString()
+            catName = data.get(position).name.toString()
             apiSubCategory()
             setCategory(data)
-           /* for (i in data.indices) {
-                if (data.get(i).name.equals(parent.getItemAtPosition(position))) {
-                    Log.d("StateID", data.get(i).id.toString())
+            /* for (i in data.indices) {
+                 if (data.get(i).name.equals(parent.getItemAtPosition(position))) {
+                     Log.d("StateID", data.get(i).id.toString())
 
 
-                }
-            }*/
+                 }
+             }*/
         })
         adapte1.notifyDataSetChanged()
     }
@@ -471,12 +519,12 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
         binding.SelectSubCategory.setAdapter(adapte1)
         binding.SelectSubCategory.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
             Log.d("xcvxcvc", Gson().toJson(data.get(position).name))
-            subCatName=data.get(position).name.toString()
+            subCatName = data.get(position).name.toString()
             for (i in data.indices) {
                 if (data.get(i).name.equals(parent.getItemAtPosition(position))) {
                     Log.d("StateID", data.get(i).id.toString())
-              //      setCategory(data)
-                    apiSubCategory( )
+                    //      setCategory(data)
+                    apiSubCategory()
                 }
             }
         })
@@ -499,13 +547,13 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
         binding.SelectVendorLabour.setAdapter(adapte1)
         binding.SelectVendorLabour.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
             Log.d("xcvxcvc", Gson().toJson(data.get(position).name))
-       //     subCatName=data.get(position).name.toString()
+            //     subCatName=data.get(position).name.toString()
             for (i in data.indices) {
                 if (data.get(i).name.equals(parent.getItemAtPosition(position))) {
                     Log.d("StateID", data.get(i).id.toString())
                     //      setCategory(data)
-                    vendorID=data.get(i).id.toString()
-                    apiSubCategory( )
+                    vendorID = data.get(i).id.toString()
+                    apiSubCategory()
                 }
             }
         })
@@ -625,7 +673,7 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
 
         if (requestCode == CAMERA_PERMISSION_CODE1) {
             try {
-                Toast.makeText(this@AddExpensesActivity, "sdfsd", Toast.LENGTH_SHORT).show()
+                //    Toast.makeText(this@AddExpensesActivity, "sdfsd", Toast.LENGTH_SHORT).show()
 
                 val imageBitmap = data?.extras?.get("data") as Bitmap
                 binding.btnAadharFront.setImageBitmap(imageBitmap)
@@ -642,9 +690,9 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
     }
 
     fun dialogAddCategory() {
-        val builder = AlertDialog.Builder(this,R.style.CustomAlertDialog)
+        val builder = AlertDialog.Builder(this, R.style.CustomAlertDialog)
             .create()
-        val dialog = layoutInflater.inflate(R.layout.dialog_add_cat,null)
+        val dialog = layoutInflater.inflate(R.layout.dialog_add_cat, null)
 
         builder.setView(dialog)
 
@@ -652,12 +700,14 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
         builder.show()
 
         val ivClose = dialog.findViewById<ImageView>(R.id.ivClose)
-       val  editCatName = dialog.findViewById<TextInputEditText>(R.id.editCatName) as TextInputEditText
-       val  SelectActive = dialog.findViewById<AutoCompleteTextView>(R.id.SelectActive) as AutoCompleteTextView
+        val editCatName =
+            dialog.findViewById<TextInputEditText>(R.id.editCatName) as TextInputEditText
+        val SelectActive =
+            dialog.findViewById<AutoCompleteTextView>(R.id.SelectActive) as AutoCompleteTextView
 
         val btnSubmit = dialog.findViewById<TextView>(R.id.btnSubmit) as TextView
 
-        ivClose.setOnClickListener {  builder.dismiss() }
+        ivClose.setOnClickListener { builder.dismiss() }
         val state = arrayOfNulls<String>(activeType.size)
         for (i in activeType.indices) {
             state[i] = activeType.get(i)
@@ -679,9 +729,9 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
 
         btnSubmit.setOnClickListener {
             builder.dismiss()
-            if (editCatName.text.isNullOrEmpty()){
-                Toast.makeText(this,"Enter Category Name",Toast.LENGTH_SHORT).show()
-            }else{
+            if (editCatName.text.isNullOrEmpty()) {
+                Toast.makeText(this, "Enter Category Name", Toast.LENGTH_SHORT).show()
+            } else {
                 //      apiAccept(status,ids)
             }
 
@@ -716,6 +766,6 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
     override fun onDestroy() {
         super.onDestroy()
         // Start the LocationService when the app is closed
-     //   startService(Intent(this, LocationService::class.java))
+        //   startService(Intent(this, LocationService::class.java))
     }
 }

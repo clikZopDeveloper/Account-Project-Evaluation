@@ -147,7 +147,13 @@
                     android:fontFamily="@font/roboto_bold"
                     android:textSize="@dimen/_14sp"
                     android:textColor="@color/black" />
-
+                <ImageView
+                    android:id="@+id/ivEdit"
+                    android:layout_width="@dimen/_30dip"
+                    android:layout_height="@dimen/_30dip"
+                    android:src="@drawable/ic_baseline_edit_note_24"
+                    android:background="@drawable/circle"
+                    android:padding="@dimen/_2dip"/>
 
 
             </LinearLayout>

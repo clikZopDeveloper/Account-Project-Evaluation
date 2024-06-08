@@ -10,18 +10,20 @@ data class GetExpensesBean(
     val error: Boolean, // false
     @SerializedName("msg")
     val msg: String // Data loaded successfully.
-) {
+):java.io.Serializable {
     data class Data(
         @SerializedName("amount")
-        val amount: String, // 3.00
+        val amount: String, // 10.00
         @SerializedName("build")
         val build: String, // Billed
         @SerializedName("created_at")
-        val createdAt: String, // 2024-05-29 17:40:01
+        val createdAt: String, // 2024-06-08 13:04:37
+        @SerializedName("customer_name")
+        val customerName: String, // Customer 2
         @SerializedName("expense_category")
         val expenseCategory: String, // Travel
         @SerializedName("expense_date")
-        val expenseDate: String, // 2024-05-31
+        val expenseDate: String, // 2024-06-19
         @SerializedName("expense_subcategory")
         val expenseSubcategory: String, // Cab
         @SerializedName("expense_type")
@@ -29,21 +31,21 @@ data class GetExpensesBean(
         @SerializedName("expenses_for")
         val expensesFor: Any, // null
         @SerializedName("file")
-        val `file`: String, // ../invoices/8463657365330150-title.jpg
+        val `file`: String, // ../invoices/3230873881220864-title.jpg
         @SerializedName("id")
-        val id: Int, // 4
+        val id: Int, // 2
         @SerializedName("ids")
-        val ids: String, // Customer 2
+        val ids: Int, // 2
         @SerializedName("invoice_id")
         val invoiceId: Int, // 0
         @SerializedName("name")
-        val name: String, // jhjk
+        val name: String, // test
         @SerializedName("note")
-        val note: String, // cvcv
+        val note: String, // demo
         @SerializedName("payment_mode")
         val paymentMode: String, // Cash
         @SerializedName("ref_no")
-        val refNo: String, // asadf
+        val refNo: String, // 123456
         @SerializedName("trans_id")
         val transId: String,
         @SerializedName("updated_at")
@@ -56,5 +58,5 @@ data class GetExpensesBean(
         val vendorId: Int, // 2
         @SerializedName("vendor_name")
         val vendorName: String // Labor 1
-    )
+    ):java.io.Serializable
 }

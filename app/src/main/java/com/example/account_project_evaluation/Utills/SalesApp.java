@@ -39,7 +39,7 @@ public class SalesApp extends Application implements Application.ActivityLifecyc
     public static boolean isUpComingSession = true;
    // public static ArrayList<StateBean.Data> stateList = new ArrayList<>();
 
-    public static Boolean isEnableScreenshort = true;
+    public static Boolean isEnableScreenshort = false;
     @Override
     public void onCreate() {
         super.onCreate();

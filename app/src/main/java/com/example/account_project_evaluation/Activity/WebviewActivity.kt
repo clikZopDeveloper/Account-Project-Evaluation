@@ -1,7 +1,9 @@
 package com.example.account_project_evaluation.Activity
 
+import android.net.http.SslError
 import android.os.Bundle
 import android.print.PrintManager
+import android.util.Log
 import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -13,6 +15,7 @@ class WebviewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWebviewBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_webview)
         val url=intent.getStringExtra("invoiceUrl")
         binding.webview.loadUrl(url!!)
@@ -27,6 +30,7 @@ class WebviewActivity : AppCompatActivity() {
         binding.webview.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                 view?.loadUrl(request?.url.toString())
+                Log.d("zvczxc",request?.url.toString())
                 return true
             }
             override fun onPageStarted(view: WebView?, url: String?, favicon: android.graphics.Bitmap?) {
@@ -42,6 +46,14 @@ class WebviewActivity : AppCompatActivity() {
                 super.onReceivedError(view, request, error)
                 // Code to handle error
             }
+            override fun onReceivedSslError(
+                view: WebView?,
+                handler: SslErrorHandler,
+                error: SslError?
+            ) {
+                Log.d("aasdad", error?.toString()!!)
+                handler.proceed() // Ignore SSL certificate errors
+            }
         }
 
         binding.fbPrint.setOnClickListener {
@@ -55,13 +67,12 @@ class WebviewActivity : AppCompatActivity() {
                 message: String,
                 result: JsResult
             ): Boolean {
-                return if (message == "abc") {
-                    result.cancel()
-                    true
-                } else false
+                return super.onJsAlert(view, url, message, result)
             }
         })
+
     }
+
     private fun createWebPagePrint(webView: WebView) {
         val printManager = getSystemService(PRINT_SERVICE) as PrintManager
         val jobName = "${getString(R.string.app_name)} Document"
@@ -79,4 +90,5 @@ class WebviewActivity : AppCompatActivity() {
         else
             super.onBackPressed()
     }
+
 }

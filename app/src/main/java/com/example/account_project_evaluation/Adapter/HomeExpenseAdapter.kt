@@ -4,6 +4,7 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.account_project_evaluation.Model.DashboardBean
@@ -29,7 +30,8 @@ class HomeExpenseAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.setIsRecyclable(false)
-
+holder.ivEdit.visibility=View.GONE
+holder.ivView.visibility=View.GONE
         /*     holder.tvAdd.background = RoundView(context.resources.getColor(R.color.orange), RoundView.getRadius(20f))
              holder.tvQtyAdd.background = RoundView(context.resources.getColor(R.color.orange), RoundView.getRadius(100f))
              holder.tvQtyMinus.background = RoundView(context.resources.getColor(R.color.orange), RoundView.getRadius(100f))
@@ -68,6 +70,8 @@ class HomeExpenseAdapter(
         val tvBuildType: TextView = itemview.findViewById(R.id.tvBuildType)
         val tvNote: TextView = itemview.findViewById(R.id.tvNote)
         val tvAmount: TextView = itemview.findViewById(R.id.tvAmount)
+        val ivEdit: ImageView = itemview.findViewById(R.id.ivEdit)
+        val ivView: ImageView = itemview.findViewById(R.id.ivView)
     }
 
 }

@@ -49,19 +49,13 @@ public class ApiContants {
         const val dayStatus = "dayStatus"
 
 ///////////////////Testing URL////////////////////////////////////////
-           const val BaseUrl="https://billingfive.wellnessexpertz.com/api/"//Testing URL
-           const val ImageBaseUrl = "https://www.art.antimatterfit.com/"//Testing URL
-           const val ImageBaseUrlWhyChoose = "https://www.art.antimatterfit.com/public/images/"//Testing URL
-           const val VideoBaseUrl = "https://www.art.antimatterfit.com/"//Testing URL
+           const val BaseUrl="https://project-evaluation.clikzopdevp.com/api/"// URL
 
 
         const val success = "success"
         const val failure = "failure"
         const val NoInternetConnection = "Please check your internet connection"
-        const val privacyUrl = "http://antimatterfit.com/privacy-policy"
-        const val returnPolicyUrl = "http://antimatterfit.com/return-policy/"
-        const val termsUrl = "http://antimatterfit.com/terms-condition"
-        const val downloadUrl = "https://atulautomotive.online/"
+
         //        api Tags
         const val login = "login"
         const val logout = "logout"
@@ -111,6 +105,7 @@ public class ApiContants {
                 activity.startActivityForResult(intent, SELECT_PICTURES);
             }
         }
+
         ////////////////////////
         fun ClickPicCamera(acivity: Activity, CAMERA_PERMISSION_CODE: Int) {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -137,8 +132,8 @@ public class ApiContants {
                 Toast.LENGTH_SHORT
             ).show()
         }
-        ///////////////////////////Date Time/////////////////////
 
+        ///////////////////////////Date Time/////////////////////
         fun showDate(context: Context, editDate: EditText){
             val c = Calendar.getInstance()
             val year = c[Calendar.YEAR]
@@ -179,9 +174,7 @@ public class ApiContants {
             }
         }
 
-
         ///////////////////Moveable Button//////////
-
         fun movabalebutton(view: FloatingActionButton, context: Activity?) {
             var dX = 0.0f
             var dY = 0.0f

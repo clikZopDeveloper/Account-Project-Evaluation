@@ -49,6 +49,7 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
     var catID = ""
     var catName = ""
     var subCatName = ""
+    var id = ""
     var file2: File? = null
     var myReceiver: ConnectivityListener? = null
     var activity: Activity = this
@@ -69,12 +70,43 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         myReceiver = ConnectivityListener()
-        binding.igToolbar.tvTitle.text = "Add Sales"
+
         binding.igToolbar.ivMenu.setImageDrawable(resources.getDrawable(R.drawable.ic_back_black))
         binding.igToolbar.ivMenu.setOnClickListener { finish() }
         binding.igToolbar.ivMenu.visibility = View.VISIBLE
-        binding.igToolbar.tvWalletBal.visibility=View.GONE
+        binding.igToolbar.tvWalletBal.visibility = View.GONE
         apiClient = ApiController(activity, this)
+        val wayType = intent.getStringExtra("way")
+        if (wayType.equals("EditSale")) {
+            binding.igToolbar.tvTitle.text = "Edit Sales"
+            val saleRsposne =
+                intent.getSerializableExtra("saleResponse") as GetSalesBean.Data
+            binding.apply {
+                id = saleRsposne.id.toString()
+                companyID = saleRsposne.companyId.toString()
+                customerID = saleRsposne.customerId.toString()
+
+                SelectBilled.setText(saleRsposne.isBilled)
+                SelectCompany.setText(saleRsposne.companyId.toString())
+                SelectCustomer.setText(saleRsposne.customer)
+                editSalesDate.setText(saleRsposne.invoiceDate)
+                editDueDate.setText(saleRsposne.dueDate)
+                //    SelectTCS.setText(saleRsposne.tcs)
+                SelectGSTType.setText(saleRsposne.gstType)
+                //  SelectCategory.setText(saleRsposne.)
+                //  SelectSubCategory.setText(saleRsposne.)
+                //   editDescription.setText(saleRsposne.)
+                //      editQty.setText(saleRsposne.qty)
+                editPrice.setText(saleRsposne.amt)
+                //     SelectGST.setText(saleRsposne.amt)
+                //    SelectItemGSTType.setText(saleRsposne.amt)
+                //   editCommisionPerQty.setText(saleRsposne.amt)
+            }
+        } else {
+            binding.igToolbar.tvTitle.text = "Add Sales"
+            id = ""
+        }
+
         allGetApi()
         setBuilled(builledType)
         setGSTType(GSTType)
@@ -88,9 +120,10 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
             }
 
             btnAddCategory.setOnClickListener {
-                if (binding.SelectCategory.text.toString().isNullOrEmpty()){
-                    Toast.makeText(this@AddSalesActivity,"Select Category",Toast.LENGTH_SHORT).show()
-                }else{
+                if (binding.SelectCategory.text.toString().isNullOrEmpty()) {
+                    Toast.makeText(this@AddSalesActivity, "Select Category", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
                     val multiple = AddProductBean(
                         binding.SelectCategory.text.toString(),
                         binding.SelectSubCategory.text.toString(),
@@ -109,11 +142,11 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
             }
 
             editSalesDate.setOnClickListener(View.OnClickListener {
-                ApiContants.showDate(activity,editSalesDate)
+                ApiContants.showDate(activity, editSalesDate)
             })
 
             editDueDate.setOnClickListener(View.OnClickListener {
-                ApiContants.showDate(activity,editDueDate)
+                ApiContants.showDate(activity, editDueDate)
             })
 
             btnSubmit.setOnClickListener {
@@ -135,6 +168,7 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
     fun apiAddSale() {
         SalesApp.isAddAccessToken = true
         val params = Utility.getParmMap()
+        params["sales_id"] = companyID
         params["company_id"] = companyID
         params["customer_id"] = customerID
         params["prod_list"] = Gson().toJson(list)
@@ -144,11 +178,9 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
         params["gst_type_mst"] = binding.SelectGSTType.text.toString()
         params["is_billed"] = binding.SelectBilled.text.toString()
         apiClient.progressView.showLoader()
-        Log.d("sdfgsdfhg",Gson().toJson(params))
+        Log.d("sdfgsdfhg", Gson().toJson(params))
         apiClient.getApiPostCall(ApiContants.getAddSale, params)
     }
-
-
 
     fun apiSubCategory() {
         SalesApp.isAddAccessToken = true
@@ -469,13 +501,13 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
             catName = data.get(position).name.toString()
 
             setCategory(data)
-             for (i in data.indices) {
-                 if (data.get(i).name.equals(parent.getItemAtPosition(position))) {
-                     Log.d("StateID", data.get(i).id.toString())
-                     catID=data.get(i).id.toString()
-                     apiSubCategory()
-                 }
-             }
+            for (i in data.indices) {
+                if (data.get(i).name.equals(parent.getItemAtPosition(position))) {
+                    Log.d("StateID", data.get(i).id.toString())
+                    catID = data.get(i).id.toString()
+                    apiSubCategory()
+                }
+            }
         })
         adapte1.notifyDataSetChanged()
     }
@@ -497,13 +529,13 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
             Log.d("xcvxcvc", Gson().toJson(data.get(position).name))
             subCatName = data.get(position).name.toString()
             apiSubCategory()
-         /*   for (i in data.indices) {
-                if (data.get(i).name.equals(parent.getItemAtPosition(position))) {
-                    Log.d("StateID", data.get(i).id.toString())
-                    //      setCategory(data)
+            /*   for (i in data.indices) {
+                   if (data.get(i).name.equals(parent.getItemAtPosition(position))) {
+                       Log.d("StateID", data.get(i).id.toString())
+                       //      setCategory(data)
 
-                }
-            }*/
+                   }
+               }*/
         })
         adapte1.notifyDataSetChanged()
 
@@ -512,7 +544,7 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
     fun handleProductList(data: MutableList<AddProductBean>) {
         binding.rcAllProduct.visibility = View.VISIBLE
         binding.rcAllProduct.layoutManager = LinearLayoutManager(this)
-        var mAdapter = AddSaleProductAdapter(this,  data, object :
+        var mAdapter = AddSaleProductAdapter(this, data, object :
             RvStatusClickListner {
             override fun clickPos(status: String, pos: Int) {
 

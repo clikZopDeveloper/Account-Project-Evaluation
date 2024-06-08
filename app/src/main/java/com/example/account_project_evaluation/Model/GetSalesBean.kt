@@ -10,7 +10,7 @@ data class GetSalesBean(
     val error: Boolean, // false
     @SerializedName("msg")
     val msg: String // Data loaded successfully.
-) {
+):java.io.Serializable {
     data class Data(
         @SerializedName("admin_copy")
         val adminCopy: String, // https://billingfive.wellnessexpertz.com/view-invoice-bill?id=4
@@ -50,5 +50,5 @@ data class GetSalesBean(
         val user: String, // Admin
         @SerializedName("user_id")
         val userId: Int // 1
-    )
+    ):java.io.Serializable
 }

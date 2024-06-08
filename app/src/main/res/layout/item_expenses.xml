@@ -39,16 +39,21 @@
                 android:layout_marginStart="@dimen/_5dip"
                 android:fontFamily="@font/roboto_regular"
                 android:textSize="@dimen/_12sp" />
-
-            <TextView
-                android:id="@+id/tvPaymentMode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:layout_gravity="center"
-                android:fontFamily="@font/roboto_bold"
-                android:textSize="@dimen/_16sp"
-                android:textColor="@color/colorPrimary" />
+            <ImageView
+                android:id="@+id/ivView"
+                android:layout_width="@dimen/_30dip"
+                android:layout_height="@dimen/_30dip"
+           android:layout_marginEnd="@dimen/_5dip"
+                android:src="@drawable/ic_baseline_remove_red_eye_24"
+                android:background="@drawable/circle"
+                android:padding="@dimen/_2dip"/>
+           <ImageView
+               android:id="@+id/ivEdit"
+               android:layout_width="@dimen/_30dip"
+               android:layout_height="@dimen/_30dip"
+               android:src="@drawable/ic_baseline_edit_note_24"
+               android:background="@drawable/circle"
+               android:padding="@dimen/_2dip"/>
         </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -69,13 +74,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:layout_weight="1"
                     android:layout_marginEnd="@dimen/_5dip"
                     android:layout_gravity="center"
                     android:fontFamily="@font/roboto_bold"
                     android:textSize="@dimen/_14sp"
                     android:layout_marginStart="@dimen/_10dp"
                     android:textColor="@color/black" />
-
+                <TextView
+                    android:id="@+id/tvPaymentMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="@dimen/_16sp"
+                    android:textColor="@color/colorPrimary" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -269,6 +283,7 @@
                     android:textColor="@color/white" />
 
             </LinearLayout>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

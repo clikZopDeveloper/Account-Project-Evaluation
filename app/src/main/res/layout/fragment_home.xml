@@ -131,7 +131,7 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    tools:itemCount="4"
+                    tools:itemCount="1"
                     tools:listitem="@layout/item_sales" />
                 <TextView
                     android:layout_width="match_parent"

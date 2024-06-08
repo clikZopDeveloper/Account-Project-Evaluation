@@ -1,13 +1,17 @@
 package com.example.account_project_evaluation.Adapter
 
 import android.app.Activity
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.account_project_evaluation.Activity.AddExpensesActivity
+import com.example.account_project_evaluation.Activity.AddSalesActivity
 import com.example.account_project_evaluation.Model.GetSalesBean
 import com.example.account_project_evaluation.R
 import com.example.account_project_evaluation.Utills.RvStatusClickListner
@@ -66,6 +70,15 @@ class GetSaleAdapter(
         holder.tvViewCustInvoice.setOnClickListener {
              rvClickListner.clickPos(list[position].customerCopy,list[position].id)
         }
+        holder.ivEdit.setOnClickListener {
+            context.startActivity(
+                Intent(
+                    context,
+                    AddSalesActivity::class.java
+                ).putExtra("saleResponse", list[position])
+                    .putExtra("way","EditSale")
+            )
+        }
     }
 
     override fun getItemCount(): Int {
@@ -81,6 +94,7 @@ class GetSaleAdapter(
         val tvViewAdminInvoice: TextView = itemview.findViewById(R.id.tvViewAdminInvoice)
         val tvViewCustInvoice: TextView = itemview.findViewById(R.id.tvViewCustInvoice)
         val llInvoice: LinearLayout = itemview.findViewById(R.id.llInvoice)
+        val ivEdit: ImageView = itemview.findViewById(R.id.ivEdit)
     }
 
 }

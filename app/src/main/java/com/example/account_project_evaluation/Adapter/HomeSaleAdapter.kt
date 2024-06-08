@@ -4,6 +4,7 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -29,7 +30,7 @@ class HomeSaleAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.setIsRecyclable(false)
-
+holder.ivEdit.visibility=View.GONE
         /*     holder.tvAdd.background = RoundView(context.resources.getColor(R.color.orange), RoundView.getRadius(20f))
              holder.tvQtyAdd.background = RoundView(context.resources.getColor(R.color.orange), RoundView.getRadius(100f))
              holder.tvQtyMinus.background = RoundView(context.resources.getColor(R.color.orange), RoundView.getRadius(100f))
@@ -60,6 +61,7 @@ class HomeSaleAdapter(
             );
 
         }
+
         holder.itemView.setOnClickListener {
             //  rvClickListner.clickPos(list[position].indexId)
         }
@@ -75,6 +77,7 @@ class HomeSaleAdapter(
         val tvGSTType: TextView = itemview.findViewById(R.id.tvGSTType)
         val tvIsBilled: TextView = itemview.findViewById(R.id.tvIsBilled)
         val tvDueDate: TextView = itemview.findViewById(R.id.tvDueDate)
+        val ivEdit: ImageView = itemview.findViewById(R.id.ivEdit)
     }
 
 }
