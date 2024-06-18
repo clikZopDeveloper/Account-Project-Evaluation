@@ -48,7 +48,7 @@ class PasswordChnageActivity : AppCompatActivity(), ApiResponseListner,
         binding.igToolbar.tvWalletBal.visibility=View.GONE
 
         binding.apply {
-            btnSubmit.setOnClickListener {     apiChangePassword() }
+            btnSubmit.setOnClickListener { apiChangePassword() }
         }
     }
 
@@ -90,7 +90,6 @@ class PasswordChnageActivity : AppCompatActivity(), ApiResponseListner,
         apiClient.getApiPostCall(ApiContants.getPasswordChange, params)
 
     }
-
 
     override fun onStart() {
         super.onStart()

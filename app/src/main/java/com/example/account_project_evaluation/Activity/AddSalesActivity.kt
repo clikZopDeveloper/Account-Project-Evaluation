@@ -58,7 +58,6 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
     val ItemGSTType = listOf("Include", "Exclude")
     val TCS = listOf("0", "5", "15", "20")
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_sales)
@@ -76,12 +75,14 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
         binding.igToolbar.ivMenu.visibility = View.VISIBLE
         binding.igToolbar.tvWalletBal.visibility = View.GONE
         apiClient = ApiController(activity, this)
+
         val wayType = intent.getStringExtra("way")
         if (wayType.equals("EditSale")) {
             binding.igToolbar.tvTitle.text = "Edit Sales"
-            val saleRsposne =
-                intent.getSerializableExtra("saleResponse") as GetSalesBean.Data
+            val saleRsposne = intent.getSerializableExtra("saleResponse") as GetSalesBean.Data
+
             binding.apply {
+
                 id = saleRsposne.id.toString()
                 companyID = saleRsposne.companyId.toString()
                 customerID = saleRsposne.customerId.toString()
@@ -102,6 +103,7 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
                 //    SelectItemGSTType.setText(saleRsposne.amt)
                 //   editCommisionPerQty.setText(saleRsposne.amt)
             }
+
         } else {
             binding.igToolbar.tvTitle.text = "Add Sales"
             id = ""
@@ -121,8 +123,7 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
 
             btnAddCategory.setOnClickListener {
                 if (binding.SelectCategory.text.toString().isNullOrEmpty()) {
-                    Toast.makeText(this@AddSalesActivity, "Select Category", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(this@AddSalesActivity, "Select Category", Toast.LENGTH_SHORT).show()
                 } else {
                     val multiple = AddProductBean(
                         binding.SelectCategory.text.toString(),
@@ -153,6 +154,7 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
                 apiAddSale()
             }
         }
+
     }
 
     fun allGetApi() {
@@ -168,7 +170,7 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
     fun apiAddSale() {
         SalesApp.isAddAccessToken = true
         val params = Utility.getParmMap()
-        params["sales_id"] = companyID
+       // params["sales_id"] = companyID
         params["company_id"] = companyID
         params["customer_id"] = customerID
         params["prod_list"] = Gson().toJson(list)
@@ -205,7 +207,6 @@ class AddSalesActivity : AppCompatActivity(), ApiResponseListner,
                 } else {
                     Toast.makeText(this@AddSalesActivity, categoryBean.msg, Toast.LENGTH_SHORT)
                         .show()
-
                 }
             }
             if (tag == ApiContants.getCategory) {

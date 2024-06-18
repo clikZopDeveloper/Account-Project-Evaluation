@@ -15,7 +15,7 @@ public class ProgressView {
 
     public ProgressView(Context context) {
         this.context = context;
-        dialog = new Dialog(context, R.style.DialogFragmentTheme);
+        dialog = new Dialog(context, 0);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.loader_dialog);
         dialog.setCancelable(false);

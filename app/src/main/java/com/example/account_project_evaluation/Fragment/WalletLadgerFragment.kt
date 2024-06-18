@@ -107,6 +107,9 @@ class WalletLadgerFragment : Fragment(), ApiResponseListner {
         apiClient.progressView.showLoader()
         params["fromDt"] = binding.editdateFrom.text.toString()
         params["toDt"] = binding.editToDate.text.toString()
+
+     /*   params["fromDt"] = "2024-1-1"
+        params["toDt"] = "2026-1-1"*/
         apiClient.getApiPostCall(ApiContants.GetWalletLadger, params)
     }
 
@@ -135,8 +138,14 @@ class WalletLadgerFragment : Fragment(), ApiResponseListner {
                     WalletLedgerBean::class.java
                 )
                 if (walletLedgerBean.error == false) {
+
                     setData(walletLedgerBean.data.userWallet)
-                    //     handleAllTask(walletLedgerBean.data.walletHistory)
+                    if (walletLedgerBean.data.creditAmount.creditAmount!=null)
+                    binding.tvCRAMT.text=ApiContants.currency+walletLedgerBean.data.creditAmount.creditAmount
+                    if (walletLedgerBean.data.debitAmount.debitAmount!=null)
+                    binding.tvDRAMT.text=ApiContants.currency+walletLedgerBean.data.debitAmount.debitAmount
+
+                        handleAllTask(walletLedgerBean.data.walletHistory)
                 } else {
                     Toast.makeText(activity, walletLedgerBean.msg, Toast.LENGTH_SHORT).show()
                 }
@@ -153,7 +162,9 @@ class WalletLadgerFragment : Fragment(), ApiResponseListner {
         Utility.showSnackBar(requireActivity(), errorMessage)
     }
 
-    fun setData(userWallet: WalletLedgerBean.Data.UserWallet) {
+    fun setData(
+        userWallet: WalletLedgerBean.Data.UserWallet
+    ) {
         binding.apply {
             tvDate.text=userWallet.createdAt
             tvRole.text=userWallet.role//93586
@@ -164,13 +175,13 @@ class WalletLadgerFragment : Fragment(), ApiResponseListner {
         }
     }
 
-    fun handleAllTask(data: List<WalletLedgerBean.Data>) {
+    fun handleAllTask(data: List<WalletLedgerBean.Data.WalletHistory>) {
         binding.rcTask.layoutManager =
             LinearLayoutManager(requireContext())
         val mAllAdapter = WalletLadgerAdapter(requireActivity(), data, object :
             RvStatusClickListner {
             override fun clickPos(status: String, pos: Int) {
-                dialogUpdateTask(pos)
+             //   dialogUpdateTask(pos)
             }
         })
         binding.rcTask.adapter = mAllAdapter

@@ -73,6 +73,7 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
                 WindowManager.LayoutParams.FLAG_SECURE
             )
         }
+
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         myReceiver = ConnectivityListener()
 
@@ -83,7 +84,6 @@ class AddExpensesActivity : AppCompatActivity(), ApiResponseListner,
         apiClient = ApiController(activity, this)
         val wayType = intent.getStringExtra("way")
         if (wayType.equals("EditExpense")) {
-
             binding.igToolbar.tvTitle.text = "Edit Expenses"
             val expesneRsposne =
                 intent.getSerializableExtra("expenseResponse") as GetExpensesBean.Data

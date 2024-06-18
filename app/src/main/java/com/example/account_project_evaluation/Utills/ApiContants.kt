@@ -69,6 +69,7 @@ public class ApiContants {
         const val getCompany = "get-company"
         const val getExpenseCategory = "get-expense-category"
         const val getCategory = "get-category"
+        const val getSettings = "settings"
         const val getExpenseSubCategory = "get-expense-sub-category"
         const val getSubCategory = "get-sub-category"
         const val getExpenses = "get-expense"

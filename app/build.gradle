@@ -102,4 +102,6 @@ dependencies {
     debugImplementation "com.github.chuckerteam.chucker:library:4.0.0"
     releaseImplementation "com.github.chuckerteam.chucker:library-no-op:4.0.0"
 
+
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 }

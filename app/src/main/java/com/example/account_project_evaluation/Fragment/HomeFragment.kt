@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.account_project_evaluation.Activity.*
 import com.example.account_project_evaluation.Adapter.DashboardAdapter
 import com.example.account_project_evaluation.Adapter.HomeExpenseAdapter
@@ -48,6 +49,10 @@ class HomeFragment : Fragment(), ApiResponseListner {
 
       //  (activity as DashboardActivity?)?.setTitle("Dashboard")
 
+        binding.refreshLayout.setOnRefreshListener {
+            apiDashboard()
+            binding.refreshLayout.isRefreshing = false
+        }
         binding.fbAddArchitect.setOnClickListener {
             requireActivity().startActivity(
                 Intent(
@@ -78,6 +83,8 @@ class HomeFragment : Fragment(), ApiResponseListner {
                 )
             }
         }
+        Glide.with(this).load(PrefManager.getString("CompanyLogo","")).into(binding.cmpnyLogo)
+
 
         return root
     }
@@ -217,7 +224,6 @@ class HomeFragment : Fragment(), ApiResponseListner {
 
         return menuList
     }
-
 
     fun callPGURL(url: String) {
         Log.d("weburl", url)

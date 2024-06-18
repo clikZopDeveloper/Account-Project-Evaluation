@@ -8,6 +8,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
 import com.example.account_project_evaluation.ApiHelper.ApiController
 import com.example.account_project_evaluation.ApiHelper.ApiResponseListner
 import com.example.account_project_evaluation.Model.LoginBean
@@ -36,6 +37,8 @@ class LoginActivity : AppCompatActivity(), ApiResponseListner {
         );
 
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
+
         binding.btnLogin.setOnClickListener {
             doLogin()
         }
@@ -130,6 +133,7 @@ class LoginActivity : AppCompatActivity(), ApiResponseListner {
 
     override fun onResume() {
         super.onResume()
+        Glide.with(this).load(PrefManager.getString("CompanyLogo","")).into(binding.cmpnyLogos)
     }
 
 }

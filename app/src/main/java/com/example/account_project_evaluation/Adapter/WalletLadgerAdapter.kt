@@ -9,9 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.account_project_evaluation.Model.WalletLedgerBean
 import com.example.account_project_evaluation.R
 import com.example.account_project_evaluation.Utills.RvStatusClickListner
+import com.stpl.antimatter.Utils.ApiContants
 
 
-class WalletLadgerAdapter(var context: Activity, var list: List<WalletLedgerBean.Data>, var rvClickListner: RvStatusClickListner) : RecyclerView.Adapter<WalletLadgerAdapter.MyViewHolder>(){
+class WalletLadgerAdapter(var context: Activity, var list: List<WalletLedgerBean.Data.WalletHistory>, var rvClickListner: RvStatusClickListner) : RecyclerView.Adapter<WalletLadgerAdapter.MyViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder { // infalte the item Layout
         val v = LayoutInflater.from(parent.context).inflate(R.layout.item_wallet_ledger, parent, false)
@@ -28,7 +29,9 @@ class WalletLadgerAdapter(var context: Activity, var list: List<WalletLedgerBean
         holder.tvOff.background = RoundView(context.resources.getColor(R.color.orange), RoundView.getRadius(20f))
         holder.tvAdd.visibility = View.VISIBLE*/
 
-       // holder.tvName.text= list[position].userWallet
+        holder.tvAmount.text= ApiContants.currency+list[position].amount
+        holder.tvRemarks.text= list[position].remarks
+        holder.tvDate.text= list[position].createdAt
 
         holder.itemView.setOnClickListener {
          //  rvClickListner.clickPos(list[position].indexId)
@@ -40,8 +43,9 @@ class WalletLadgerAdapter(var context: Activity, var list: List<WalletLedgerBean
     }
 
     inner class MyViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
-        val tvName: TextView = itemview.findViewById(R.id.tvName)
-       val tvTitle: TextView = itemview.findViewById(R.id.tvTitle)
+        val tvAmount: TextView = itemview.findViewById(R.id.tvAmount)
+       val tvRemarks: TextView = itemview.findViewById(R.id.tvRemarks)
+       val tvDate: TextView = itemview.findViewById(R.id.tvDate)
     }
 
 }

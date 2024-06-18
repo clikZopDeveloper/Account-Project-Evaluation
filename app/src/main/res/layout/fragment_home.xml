@@ -7,6 +7,10 @@
 
     </data>
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,11 +30,11 @@
                 tools:context=".Fragment.HomeFragment">
 
                 <ImageView
+                    android:id="@+id/cmpnyLogo"
                     android:layout_width="250dp"
                     android:layout_height="@dimen/_100dip"
                     android:layout_gravity="center"
-                    android:layout_margin="@dimen/_5dip"
-                    android:src="@drawable/app_logo" />
+                    android:layout_margin="@dimen/_5dip" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -177,5 +181,5 @@
             app:tint="@android:color/white" />
     </RelativeLayout>
 
-
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>
