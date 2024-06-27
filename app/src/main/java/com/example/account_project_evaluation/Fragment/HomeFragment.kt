@@ -47,7 +47,9 @@ class HomeFragment : Fragment(), ApiResponseListner {
         val root: View = binding.root
         apiClient = ApiController(activity, this)
 
-      //  (activity as DashboardActivity?)?.setTitle("Dashboard")
+
+     /*   val titleText = (activity as DashboardActivity?)
+        titleText?.setTitle("Dashboard")*/
 
         binding.refreshLayout.setOnRefreshListener {
             apiDashboard()

@@ -47,7 +47,6 @@ class ExpensesFragment : Fragment(), ApiResponseListner {
         apiClient = ApiController(activity, this)
   //    ApiContants.movabalebutton(binding.fbAddArchitect,requireActivity())
 
-
         return root
     }
 
